@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://easy-asylum.com/sitemap.xml
+Sitemap: https://asylumusa.netlify.app/sitemap.xml
