@@ -3,12 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Безопасный маршрут — консультации по выезду, маршруту, билетам и подготовке материалов для международной защиты." />
-  <title>Безопасный маршрут — план выезда и сопровождение</title>
+  <title>Помощь с выездом из России — маршрут, транзит и документы</title>
+  <meta name="description" content="Помощь с выездом из России, маршрут и транзит, документы для выезда, подготовка кейса на убежище и бесплатный первичный разбор ситуации." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#06111f" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="canonical" href="https://easy-asylum.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:title" content="Помощь с выездом из России — маршрут, транзит и документы" />
+  <meta property="og:description" content="Разбор ситуации, реалистичный маршрут, транзит, билеты и подготовка документов. Первый разбор — бесплатно." />
+  <meta property="og:url" content="https://easy-asylum.com/" />
+  <meta property="og:site_name" content="Безопасный маршрут" />
+  <meta property="og:image" content="https://easy-asylum.com/assets/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Помощь с выездом из России — маршрут, транзит и документы" />
+  <meta name="twitter:description" content="План выезда, оценка рисков, транзит, билеты и подготовка материалов. Бесплатный первичный разбор." />
+  <meta name="twitter:image" content="https://easy-asylum.com/assets/og-cover.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Onest:wght@400;500;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Безопасный маршрут",
+    "description": "Консультационная помощь по планированию выезда, транзита, билетов и подготовке материалов для международной защиты.",
+    "url": "https://easy-asylum.com/",
+    "areaServed": "Worldwide",
+    "availableLanguage": ["ru"],
+    "sameAs": ["https://t.me/easy_asylum"],
+    "priceRange": "Бесплатная первичная консультация",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://t.me/easy_asylum",
+      "availableLanguage": ["ru"]
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Форматы помощи",
+      "itemListElement": [
+        {"@type": "Offer", "name": "Быстрый разбор", "price": "0", "priceCurrency": "RUB"},
+        {"@type": "Offer", "name": "Маршрут и билеты", "priceSpecification": {"@type": "PriceSpecification", "priceCurrency": "RUB", "minPrice": "30000"}},
+        {"@type": "Offer", "name": "Подготовка истории и материалов", "priceSpecification": {"@type": "PriceSpecification", "priceCurrency": "RUB", "minPrice": "50000"}},
+        {"@type": "Offer", "name": "Полное сопровождение", "priceSpecification": {"@type": "PriceSpecification", "priceCurrency": "RUB", "minPrice": "100000"}}
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Вы гарантируете визу или убежище?", "acceptedAnswer": {"@type": "Answer", "text": "Нет. Мы помогаем подготовиться, оценить риски, собрать материалы и выстроить маршрут. Решения принимают государственные органы."}},
+      {"@type": "Question", "name": "Вы юридическая фирма?", "acceptedAnswer": {"@type": "Answer", "text": "Нет. Мы оказываем консультационную и организационную помощь. Для подачи и представительства в конкретной стране нужен лицензированный юрист."}},
+      {"@type": "Question", "name": "Можно начать анонимно?", "acceptedAnswer": {"@type": "Answer", "text": "Да. На первом этапе можно написать без полного имени. Для оплаты, договора или работы с документами данные могут понадобиться позже."}},
+      {"@type": "Question", "name": "Что написать в первом сообщении?", "acceptedAnswer": {"@type": "Answer", "text": "Где вы сейчас, гражданство, куда рассматриваете выезд, сколько времени есть, едете один или с семьей, что уже подготовлено."}}
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="header" id="header">
@@ -18,11 +76,12 @@
         <span>Безопасный маршрут</span>
       </a>
       <nav class="nav" aria-label="Основное меню">
-        <a href="#services">Услуги</a>
-        <a href="#route">Что получите</a>
-        <a href="#process">Как работаем</a>
+        <a href="#seo-services">Услуги</a>
+        <a href="#articles">Статьи</a>
+        <a href="#about">О нас</a>
         <a href="#pricing">Стоимость</a>
         <a href="#faq">FAQ</a>
+        <a href="#contact">Контакты</a>
       </nav>
       <a href="#contact" class="btn btn-header">Разобрать ситуацию</a>
       <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false">
@@ -38,7 +97,7 @@
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Конфиденциально · маршрут · документы · выезд</p>
-          <h1>Маршрут выезда, который можно выполнить без хаоса</h1>
+          <h1>Маршрут выезда из России, который можно выполнить без хаоса</h1>
           <p class="lead">Разбираем вашу ситуацию, находим реалистичные страны, собираем документы и превращаем тревожный переезд в пошаговый план с понятными рисками.</p>
           <div class="hero-actions">
             <a href="#contact" class="btn btn-primary btn-lg">Разобрать мой маршрут</a>
@@ -52,7 +111,7 @@
           <div class="hero-quick-actions" aria-label="Быстрые сценарии">
             <button type="button" data-modal="scenario-1">Срочно уехать</button>
             <button type="button" data-modal="scenario-3">Подготовить кейс</button>
-            <a href="#pricing">Оценить бюджет</a>
+            <a href="#directions">Популярные направления</a>
           </div>
         </div>
 
@@ -99,6 +158,121 @@
         <span></span>
         Что получите после разбора
       </a>
+    </section>
+
+    <section class="seo-services reveal" id="seo-services">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Услуги по выезду и подготовке</p>
+          <h2>Помощь с выездом из России, убежищем и безопасным транзитом</h2>
+          <p>Эти направления закрывают самые частые запросы: срочный выезд, подготовка материалов для международной защиты, проверка маршрута, документов и первых действий после прибытия.</p>
+        </div>
+        <div class="seo-feature-grid">
+          <article class="seo-feature-card" id="help-exit-russia">
+            <span class="seo-kicker">Услуга</span>
+            <h3>Помощь с выездом из России</h3>
+            <p>Помогаем разложить ситуацию на практические шаги: какие документы есть сейчас, насколько срочно нужно выезжать, какие страны доступны, где возможны транзитные риски и что лучше проверить до покупки билета.</p>
+            <ul>
+              <li>первичная оценка паспорта, виз, сроков и ограничений;</li>
+              <li>план действий на ближайшие дни без хаотичных решений;</li>
+              <li>чек-лист перед дорогой: документы, сканы, деньги, связь, копии;</li>
+              <li>понимание, когда нужен миграционный юрист в стране назначения.</li>
+            </ul>
+            <a class="seo-card-link" href="pomoshch-s-vyezdom-iz-rossii/index.html">Подробнее об услуге</a>
+          </article>
+          <article class="seo-feature-card" id="asylum-case-prep">
+            <span class="seo-kicker">Услуга</span>
+            <h3>Подготовка кейса на убежище</h3>
+            <p>Структурируем историю так, чтобы она была последовательной: даты, события, участники, документы, подтверждения, пробелы и вопросы, которые лучше заранее обсудить с юристом.</p>
+            <ul>
+              <li>хронология событий без противоречий и лишнего шума;</li>
+              <li>карта доказательств: что есть, чего не хватает, где искать подтверждения;</li>
+              <li>подготовка материалов для передачи лицензированному юристу;</li>
+              <li>отдельный список рисков: слабые места, несостыковки, сроки.</li>
+            </ul>
+            <a class="seo-card-link" href="podgotovka-keysa-na-ubezhishche/index.html">Подробнее об услуге</a>
+          </article>
+          <article class="seo-feature-card" id="route-transit">
+            <span class="seo-kicker">Услуга</span>
+            <h3>Маршрут и транзит</h3>
+            <p>Маршрут — это не только билет. Важны пересадки, правила въезда, документы на детей, срок действия паспорта, обратные билеты, багаж, связь и действия при вопросах на контроле.</p>
+            <ul>
+              <li>сравнение нескольких реалистичных маршрутов;</li>
+              <li>проверка транзитных стран, пересадок и времени между рейсами;</li>
+              <li>план Б на случай отмены рейса или изменения правил;</li>
+              <li>короткая инструкция: что держать под рукой в дороге.</li>
+            </ul>
+            <a class="seo-card-link" href="marshrut-i-tranzit/index.html">Подробнее об услуге</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="articles reveal" id="articles">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Полезные статьи</p>
+          <h2>Короткие материалы для тех, кто готовит выезд</h2>
+          <p>Статьи написаны как практические ориентиры. Они не заменяют юридическую консультацию, но помогают понять, какие вопросы нужно решить до дороги и до разговора с юристом.</p>
+        </div>
+        <div class="article-grid">
+          <article class="article-card" id="how-to-leave-russia">
+            <span>Статья</span>
+            <h3>Как уехать из России: с чего начать</h3>
+            <p>Начните не с покупки билета, а с инвентаризации: действующий загранпаспорт, визы, ограничения, семейная ситуация, бюджет, срочность, лекарства, банковские карты, доступ к мессенджерам и резервный контакт.</p>
+            <p>Дальше сравните 2-3 маршрута: прямой выезд, транзит через третью страну, наземный путь, срок пересадки и вероятность дополнительных вопросов. Хороший план содержит не только направление, но и запасной сценарий.</p>
+            <a href="articles/kak-uehat-iz-rossii/index.html">Читать статью</a>
+          </article>
+          <article class="article-card" id="exit-documents">
+            <span>Статья</span>
+            <h3>Документы для выезда: что проверить заранее</h3>
+            <p>Проверьте срок действия паспорта, визовые требования страны назначения и транзита, документы для детей, нотариальные согласия при выезде несовершеннолетних без родителей, копии важных документов и доступ к цифровым архивам.</p>
+            <p>Для детей до 14 лет могут потребоваться документы, подтверждающие гражданство РФ. При поездке ребенка без родителей обычно требуется нотариальное согласие с указанием срока и государства поездки.</p>
+            <a href="articles/dokumenty-dlya-vyezda/index.html">Читать статью</a>
+          </article>
+          <article class="article-card" id="asylum-story">
+            <span>Статья</span>
+            <h3>Как подготовить историю для убежища</h3>
+            <p>История должна быть не эмоциональным эссе, а последовательной хронологией: что произошло, когда, где, кто участвовал, почему это связано с риском, какие подтверждения есть и какие документы можно получить.</p>
+            <p>Практики EUAA по оценке доказательств выделяют три логики работы: сбор информации, оценка достоверности и оценка риска. Поэтому заранее полезно отделить факты, предположения и документы.</p>
+            <a href="articles/kak-podgotovit-istoriyu-dlya-ubezhishcha/index.html">Читать статью</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="directions reveal" id="directions">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Направления</p>
+          <h2>С какими маршрутами чаще всего помогаем</h2>
+          <p>Разбираем реалистичные варианты выезда, транзита и первых шагов после прибытия. Правила въезда меняются, поэтому каждый маршрут проверяется под документы, сроки и цель поездки.</p>
+        </div>
+        <div class="direction-grid">
+          <a href="marshrut-cherez-kazakhstan/index.html">Через Казахстан<span>Наземные и авиа-маршруты, документы, запасной план.</span></a>
+          <a href="marshrut-cherez-turtsiyu/index.html">Через Турцию<span>Транзит, пересадки, первые действия после прибытия.</span></a>
+          <a href="marshrut-cherez-serbiyu/index.html">Через Сербию<span>Маршрут, жилье на первые дни, документы в дороге.</span></a>
+          <a href="podgotovka-k-ssha/index.html">Подготовка к США<span>Структура истории, материалы, вопросы к юристу.</span></a>
+          <a href="podgotovka-k-evrope/index.html">Подготовка к Европе<span>Маршрут, страна прибытия, базовый пакет документов.</span></a>
+          <a href="podgotovka-k-kanade/index.html">Подготовка к Канаде<span>План подготовки, доказательства, перевод материалов.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about reveal" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow dark">О нас</p>
+          <h2>Мы помогаем принимать решения до того, как ситуация станет хаотичной</h2>
+          <p>Безопасный маршрут — это консультационная и организационная помощь для людей, которым нужно понять, куда ехать, как ехать, какие документы собрать и где подключать лицензированного юриста.</p>
+        </div>
+        <div class="about-points">
+          <article><strong>Не обещаем невозможное</strong><span>Не гарантируем визу, въезд, убежище или решение госорганов.</span></article>
+          <article><strong>Работаем по шагам</strong><span>Сначала ситуация и риски, потом маршрут, документы и действия.</span></article>
+          <article><strong>Сохраняем конфиденциальность</strong><span>На первом этапе можно написать без полного имени и лишних деталей.</span></article>
+        </div>
+      </div>
     </section>
 
     <section class="outcome reveal" id="route">
@@ -436,7 +610,7 @@
         <p>Консультационная и организационная помощь по выезду, маршруту и подготовке материалов.</p>
       </div>
       <p class="footer-legal"><strong>Важно.</strong> Мы не являемся адвокатами, представителями USCIS, DHS или иных госорганов. Не даём юридических заключений и не гарантируем визу, въезд, убежище или иной статус.</p>
-      <p class="copy">© <span id="year"></span> · Конфиденциальность переписки</p>
+      <p class="copy">© <span id="year"></span> · Конфиденциальность переписки · <a href="legal-disclaimer/index.html">Правовая информация</a></p>
     </div>
   </footer>
 

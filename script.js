@@ -146,7 +146,7 @@ const modalBody = document.getElementById('modal-body');
 
 function openModal(dataKey) {
   const data = modalData[dataKey];
-  if (!data) return;
+  if (!data || !modal || !modalBody) return;
   
   modalBody.innerHTML = `<h2>${data.title}</h2>${data.content}`;
   modal.classList.add('active');
@@ -155,6 +155,7 @@ function openModal(dataKey) {
 }
 
 function closeModal() {
+  if (!modal) return;
   modal.classList.remove('active');
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
