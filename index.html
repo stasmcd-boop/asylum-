@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Безопасный маршрут — консультации по выезду, маршруту, билетам и подготовке материалов для международной защиты." />
+  <title>Безопасный маршрут — план выезда и сопровождение</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Onest:wght@400;500;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#hero" class="logo" aria-label="Безопасный маршрут">
+        <span class="logo-mark">↗</span>
+        <span>Безопасный маршрут</span>
+      </a>
+      <nav class="nav" aria-label="Основное меню">
+        <a href="#services">Услуги</a>
+        <a href="#route">Что получите</a>
+        <a href="#process">Как работаем</a>
+        <a href="#pricing">Стоимость</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#contact" class="btn btn-header">Разобрать ситуацию</a>
+      <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-map" aria-hidden="true"></div>
+      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Конфиденциально · маршрут · документы · выезд</p>
+          <h1>Маршрут выезда, который можно выполнить без хаоса</h1>
+          <p class="lead">Разбираем вашу ситуацию, находим реалистичные страны, собираем документы и превращаем тревожный переезд в пошаговый план с понятными рисками.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary btn-lg">Разобрать мой маршрут</a>
+            <a href="#services" class="btn btn-ghost btn-lg">Выбрать формат помощи</a>
+          </div>
+          <div class="hero-proof" aria-label="Показатели работы">
+            <div><strong>24 ч</strong><span>первичный разбор срочной ситуации</span></div>
+            <div><strong>7-14</strong><span>дней планирования и подготовки</span></div>
+            <div><strong>0%</strong><span>ложных гарантий и опасных обещаний</span></div>
+          </div>
+          <div class="hero-quick-actions" aria-label="Быстрые сценарии">
+            <button type="button" data-modal="scenario-1">Срочно уехать</button>
+            <button type="button" data-modal="scenario-3">Подготовить кейс</button>
+            <a href="#pricing">Оценить бюджет</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Визуальный пример плана выезда">
+          <div class="orbit orbit-one" aria-hidden="true"></div>
+          <div class="orbit orbit-two" aria-hidden="true"></div>
+          <div class="route-card main-route-card">
+            <div class="route-card-head">
+              <span class="status-dot"></span>
+              <span>План маршрута</span>
+              <strong>Live</strong>
+            </div>
+            <div class="route-path" aria-hidden="true">
+              <span class="route-pin start">A</span>
+              <span class="route-arc"></span>
+              <span class="route-pin mid">T</span>
+              <span class="route-arc second"></span>
+              <span class="route-pin end">B</span>
+            </div>
+            <div class="route-checklist">
+              <div><span>01</span><p>Риски выезда</p><strong>оценены</strong></div>
+              <div><span>02</span><p>Транзит</p><strong>2 варианта</strong></div>
+              <div><span>03</span><p>Документы</p><strong>чек-лист</strong></div>
+            </div>
+          </div>
+          <button class="floating-card float-risk" type="button" data-modal="solution-1">
+            <span>Риск</span>
+            <strong>Не лететь вслепую</strong>
+            <small>Проверяем ограничения до покупки билета</small>
+          </button>
+          <button class="floating-card float-docs" type="button" data-modal="solution-3">
+            <span>Досье</span>
+            <strong>История без пробелов</strong>
+            <small>Факты, даты, подтверждения</small>
+          </button>
+          <a class="floating-card float-support" href="#contact">
+            <span>Связь</span>
+            <strong>Начать анонимно</strong>
+            <small>Без полного имени на первом шаге</small>
+          </a>
+        </div>
+      </div>
+      <a class="hero-scroll" href="#route" aria-label="Перейти к результатам">
+        <span></span>
+        Что получите после разбора
+      </a>
+    </section>
+
+    <section class="outcome reveal" id="route">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Результат первой консультации</p>
+          <h2>После разбора у вас будет не тревога, а понятный план</h2>
+          <p>Мы переводим сложную ситуацию в конкретные действия: куда можно ехать, какие риски есть, какие документы подготовить и что делать в ближайшие дни.</p>
+        </div>
+        <div class="outcome-grid">
+          <article class="outcome-card">
+            <span>01</span>
+            <h3>Реалистичные страны</h3>
+            <p>Не список мечты, а варианты с учётом паспорта, бюджета, сроков, визовых ограничений и цели выезда.</p>
+          </article>
+          <article class="outcome-card">
+            <span>02</span>
+            <h3>Безопасный маршрут</h3>
+            <p>Транзитные страны, перелёты, контрольные точки, что подготовить перед дорогой и где не рисковать.</p>
+          </article>
+          <article class="outcome-card">
+            <span>03</span>
+            <h3>Чек-лист документов</h3>
+            <p>Что собрать заранее: хронология, подтверждения, сканы, переводы и материалы для дальнейшей работы с юристом.</p>
+          </article>
+          <article class="outcome-card accent">
+            <span>04</span>
+            <h3>План на 7–14 дней</h3>
+            <p>Короткий понятный порядок действий: что делать сегодня, что завтра, что отложить и где нужна профессиональная юридическая помощь.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services reveal" id="services">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Форматы помощи</p>
+          <h2>Выберите уровень сопровождения</h2>
+          <p>Каждый формат можно адаптировать под срочность, страну назначения и сложность ситуации.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card" data-modal="solution-1" tabindex="0" role="button">
+            <div class="service-head">
+              <span class="service-icon">?</span>
+              <p>бесплатно</p>
+            </div>
+            <h3>Быстрый разбор</h3>
+            <p>Базовая консультация, чтобы понять проблему, риски и что с этим делать дальше.</p>
+            <ul>
+              <li>первичная оценка ситуации</li>
+              <li>что делать в первую очередь</li>
+              <li>какой формат помощи нужен</li>
+            </ul>
+            <span class="card-link">Подробнее →</span>
+          </article>
+          <article class="service-card" data-modal="solution-2" tabindex="0" role="button">
+            <div class="service-head">
+              <span class="service-icon">✈</span>
+              <p>от 30 000 ₽</p>
+            </div>
+            <h3>Маршрут и билеты</h3>
+            <p>Для тех, кому нужно уехать без ошибок в транзите и логистике.</p>
+            <ul>
+              <li>маршрут и пересадки</li>
+              <li>помощь с билетами</li>
+              <li>чек-лист дороги</li>
+            </ul>
+            <span class="card-link">Подробнее →</span>
+          </article>
+          <article class="service-card" data-modal="solution-3" tabindex="0" role="button">
+            <div class="service-head">
+              <span class="service-icon">▣</span>
+              <p>от 50 000 ₽</p>
+            </div>
+            <h3>Подготовка истории</h3>
+            <p>Для тех, кто рассматривает убежище и хочет подготовить материалы аккуратно.</p>
+            <ul>
+              <li>хронология событий</li>
+              <li>структура доказательств</li>
+              <li>пакет для юриста</li>
+            </ul>
+            <span class="card-link">Подробнее →</span>
+          </article>
+          <article class="service-card featured" data-modal="solution-4" tabindex="0" role="button">
+            <span class="badge">Чаще выбирают</span>
+            <div class="service-head">
+              <span class="service-icon">◎</span>
+              <p>от 100 000 ₽</p>
+            </div>
+            <h3>Полное сопровождение</h3>
+            <p>Когда нужен человек рядом: маршрут, документы, билеты и поддержка до выезда.</p>
+            <ul>
+              <li>персональный план</li>
+              <li>приоритетная связь</li>
+              <li>сопровождение этапов</li>
+            </ul>
+            <span class="card-link">Обсудить сопровождение →</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="fit reveal" id="fit">
+      <div class="container fit-grid">
+        <div class="fit-copy">
+          <p class="eyebrow dark">Честные границы</p>
+          <h2>Когда мы полезны — и где прямо скажем «нет»</h2>
+          <p>Сильное сопровождение — это не обещать невозможное, а заранее показать риски, ограничения и правильную последовательность действий.</p>
+        </div>
+        <div class="fit-cards">
+          <article class="fit-card yes">
+            <h3>Мы подходим, если</h3>
+            <ul>
+              <li>нужно понять, куда и как уехать;</li>
+              <li>сроки сжаты, а решений слишком много;</li>
+              <li>вы рассматриваете убежище и хотите собрать материалы;</li>
+              <li>нужна спокойная поддержка до выезда.</li>
+            </ul>
+          </article>
+          <article class="fit-card no">
+            <h3>Мы не делаем</h3>
+            <ul>
+              <li>не гарантируем визы, въезд или убежище;</li>
+              <li>не заменяем лицензированного адвоката;</li>
+              <li>не строим незаконные маршруты;</li>
+              <li>не продаём «волшебные схемы».</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="scenarios reveal" id="scenarios">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Узнайте себя</p>
+          <h2>Типичные ситуации клиентов</h2>
+          <p>Это не диагноз и не юридическая оценка — просто способ быстрее понять, какой формат помощи может подойти.</p>
+        </div>
+        <div class="scenario-grid">
+          <article class="scenario-card" data-modal="scenario-1" tabindex="0" role="button">
+            <span>Срочно</span>
+            <h3>Нужно уехать в ближайшие дни</h3>
+            <p>Документы заканчиваются, ситуация давит, решение нужно быстро.</p>
+          </article>
+          <article class="scenario-card" data-modal="scenario-2" tabindex="0" role="button">
+            <span>Семья</span>
+            <h3>Едем не одни</h3>
+            <p>Нужно учесть детей, жильё, школу, бюджет и безопасность.</p>
+          </article>
+          <article class="scenario-card" data-modal="scenario-3" tabindex="0" role="button">
+            <span>Защита</span>
+            <h3>Рассматриваю убежище</h3>
+            <p>Важно собрать историю, факты и подтверждающие материалы.</p>
+          </article>
+          <article class="scenario-card" data-modal="scenario-4" tabindex="0" role="button">
+            <span>Переезд</span>
+            <h3>Хочу сменить страну без хаоса</h3>
+            <p>Нет срочного кейса, но нужен реалистичный план релокации.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases reveal" id="cases">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Анонимные мини-кейсы</p>
+          <h2>Не обещаем результат — показываем, что было сделано</h2>
+          <p>Имена и детали изменены. Итог всегда зависит от обстоятельств, документов и решений госорганов.</p>
+        </div>
+        <div class="case-grid">
+          <article class="case-card">
+            <h3>Срочный выезд</h3>
+            <p><strong>Ситуация:</strong> мало времени, непонятный транзит, высокий стресс.</p>
+            <p><strong>Что сделали:</strong> маршрут, билеты, чек-лист документов, план первых дней.</p>
+            <div class="tags"><span>Маршрут</span><span>Срочно</span><span>План</span></div>
+          </article>
+          <article class="case-card">
+            <h3>Подготовка к убежищу</h3>
+            <p><strong>Ситуация:</strong> есть история, но нет структуры и списка подтверждений.</p>
+            <p><strong>Что сделали:</strong> хронология, карта доказательств, пакет для дальнейшей работы с юристом.</p>
+            <div class="tags"><span>Досье</span><span>Факты</span><span>Юрист</span></div>
+          </article>
+          <article class="case-card">
+            <h3>Семейный маршрут</h3>
+            <p><strong>Ситуация:</strong> несколько человек, разный багаж, вопросы жилья и школы.</p>
+            <p><strong>Что сделали:</strong> безопасный транзит, план по дням, список задач после прибытия.</p>
+            <div class="tags"><span>Семья</span><span>Транзит</span><span>Жильё</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="process reveal" id="process">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Процесс</p>
+          <h2>Как мы работаем</h2>
+          <p>У каждого этапа есть понятная цель: не просто поговорить, а приблизить вас к конкретному решению.</p>
+        </div>
+        <ol class="timeline">
+          <li>
+            <span>1</span>
+            <div><h3>Короткая заявка</h3><p>Вы пишете, где находитесь, куда рассматриваете выезд и насколько срочно нужна помощь.</p></div>
+          </li>
+          <li>
+            <span>2</span>
+            <div><h3>Разбор ситуации</h3><p>Обсуждаем сроки, документы, бюджет, ограничения, риски и возможные направления.</p></div>
+          </li>
+          <li>
+            <span>3</span>
+            <div><h3>План маршрута</h3><p>Фиксируем варианты стран, транзит, билеты, задачи и документы, которые нужно подготовить.</p></div>
+          </li>
+          <li>
+            <span>4</span>
+            <div><h3>Реализация</h3><p>В зависимости от формата помогаем с билетами, материалами, правками и сопровождением этапов.</p></div>
+          </li>
+          <li>
+            <span>5</span>
+            <div><h3>Передача юристу</h3><p>Если требуется подача в госорганы, подсказываем, что передать лицензированному юристу в стране назначения.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="pricing reveal" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow dark">Стоимость</p>
+          <h2>Прозрачные ориентиры до первого разговора</h2>
+          <p>Финальная стоимость зависит от срочности, страны, количества людей и объёма сопровождения.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card"><h3>Консультация</h3><p class="price">Бесплатно</p><p>Базовый разбор проблемы, рисков и следующих шагов.</p><a href="#contact" class="btn btn-outline">Запросить</a></article>
+          <article class="price-card"><h3>Маршрут + билеты</h3><p class="price">от 30 000 ₽</p><p>План выезда, транзит, перелёты, контрольные точки.</p><a href="#contact" class="btn btn-outline">Запросить</a></article>
+          <article class="price-card"><h3>Материалы</h3><p class="price">от 50 000 ₽</p><p>Хронология, доказательства, структура для юриста.</p><a href="#contact" class="btn btn-outline">Запросить</a></article>
+          <article class="price-card hit"><span class="badge">Рекомендуем</span><h3>Полное сопровождение</h3><p class="price">от 100 000 ₽</p><p>Маршрут, документы, билеты и поддержка на этапах.</p><a href="#contact" class="btn btn-primary">Обсудить</a></article>
+        </div>
+        <p class="legal-note">Мы не продаём гарантию результата. Решения принимают пограничные службы, консульства, иммиграционные ведомства и суды.</p>
+      </div>
+    </section>
+
+    <section class="faq reveal" id="faq">
+      <div class="container narrow">
+        <div class="section-head">
+          <p class="eyebrow dark">FAQ</p>
+          <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary>Вы гарантируете визу или убежище?</summary>
+            <p>Нет. Мы помогаем подготовиться, оценить риски, собрать материалы и выстроить маршрут. Решения принимают государственные органы.</p>
+          </details>
+          <details>
+            <summary>Вы юридическая фирма?</summary>
+            <p>Нет. Мы оказываем консультационную и организационную помощь. Для подачи и представительства в конкретной стране нужен лицензированный юрист.</p>
+          </details>
+          <details>
+            <summary>Можно начать анонимно?</summary>
+            <p>Да. На первом этапе можно написать без полного имени. Для оплаты, договора или работы с документами данные могут понадобиться позже.</p>
+          </details>
+          <details>
+            <summary>Что написать в первом сообщении?</summary>
+            <p>Где вы сейчас, гражданство, куда рассматриваете выезд, сколько времени есть, едете один или с семьёй, что уже подготовлено.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact reveal" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow">Первый шаг</p>
+          <h2>Опишите ситуацию — мы скажем, с чего начать</h2>
+          <p>Для быстрого старта достаточно короткого сообщения. Подробности уточним в переписке или на консультации.</p>
+          <div class="contact-links">
+            <a href="https://t.me/easy_asylum" class="chip telegram-chip" target="_blank" rel="noopener">Telegram @easy_asylum</a>
+          </div>
+          <div class="urgent-box">
+            <strong>Если срочно:</strong> напишите слово «Срочно» и укажите, сколько дней есть на решение.
+          </div>
+        </div>
+        <div class="contact-panel">
+          <h3 id="contact-form-heading">Быстрая заявка</h3>
+          <form class="contact-form" id="contact-form" aria-labelledby="contact-form-heading">
+            <div class="form-group">
+              <label for="f-name">Имя или псевдоним *</label>
+              <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
+            </div>
+            <div class="form-group">
+              <label for="f-msg">Ваш Telegram *</label>
+              <input id="f-msg" name="messenger" type="text" placeholder="@username" required />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="f-loc">Где вы сейчас *</label>
+                <input id="f-loc" name="location" type="text" placeholder="Город, страна" required />
+              </div>
+              <div class="form-group">
+                <label for="f-urg">Срочность *</label>
+                <select id="f-urg" name="urgency" required>
+                  <option value="">Выберите</option>
+                  <option value="critical">Критично, несколько дней</option>
+                  <option value="month">До месяца</option>
+                  <option value="planning">Планирую заранее</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="f-body">Что нужно решить? *</label>
+              <textarea id="f-body" name="message" rows="4" placeholder="Куда хотите, кто едет, какие сроки, что уже пробовали" required></textarea>
+            </div>
+            <label class="checkbox-label">
+              <input type="checkbox" required />
+              <span>Я понимаю, что консультация не гарантирует решения государственных органов и не заменяет адвоката.</span>
+            </label>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Отправить заявку</button>
+          </form>
+          <div class="form-success" id="form-success" hidden>
+            <div class="success-icon">✓</div>
+            <h3>Заявка принята</h3>
+            <p id="form-success-text">Заявка подготовлена для отправки в Telegram.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">Безопасный маршрут</p>
+        <p>Консультационная и организационная помощь по выезду, маршруту и подготовке материалов.</p>
+      </div>
+      <p class="footer-legal"><strong>Важно.</strong> Мы не являемся адвокатами, представителями USCIS, DHS или иных госорганов. Не даём юридических заключений и не гарантируем визу, въезд, убежище или иной статус.</p>
+      <p class="copy">© <span id="year"></span> · Конфиденциальность переписки</p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button type="button" class="modal-close" aria-label="Закрыть">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
