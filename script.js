@@ -185,10 +185,36 @@ document.addEventListener('keydown', (e) => {
 // FORM HANDLING
 const contactForm = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
+function escapeHtml(value) {
+  return String(value || '-')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+async function sendTelegramLead(message) {
+  const response = await fetch('/.netlify/functions/send-telegram', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message })
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok || !result?.ok) {
+    throw new Error(result?.error || 'Telegram request failed');
+  }
+
+  return result;
+}
 
 contactForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
 
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const initialButtonText = submitButton?.textContent || 'Отправить заявку';
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData);
   const urgencyMap = {
@@ -198,40 +224,68 @@ contactForm?.addEventListener('submit', async (e) => {
   };
 
   const telegramMessage = [
-    'Новая заявка с сайта Safe Route',
+    '<b>Новая заявка с сайта Safe Route</b>',
     '',
-    'Имя: ' + (data.name || '-'),
-    'Telegram: ' + (data.messenger || '-'),
-    'Где сейчас: ' + (data.location || '-'),
-    'Срочность: ' + (urgencyMap[data.urgency] || data.urgency || '-'),
+    '<b>Имя:</b> ' + escapeHtml(data.name),
+    '<b>Telegram:</b> ' + escapeHtml(data.messenger),
+    '<b>Где сейчас:</b> ' + escapeHtml(data.location),
+    '<b>Срочность:</b> ' + escapeHtml(urgencyMap[data.urgency] || data.urgency || '-'),
     '',
-    'Что нужно решить:',
-    data.message || '-'
+    '<b>Что нужно решить:</b>',
+    escapeHtml(data.message)
   ].join('\n');
 
-  console.log('Form data:', data);
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Отправляем...';
+  }
 
   try {
-    await navigator.clipboard?.writeText(telegramMessage);
+    await sendTelegramLead(telegramMessage);
+
+    contactForm.reset();
+    contactForm.style.display = 'none';
+    if (formSuccess) formSuccess.hidden = false;
+
+    const successText = document.getElementById('form-success-text');
+    if (successText) {
+      successText.textContent = 'Заявка отправлена в Telegram. Мы свяжемся с вами после разбора сообщения.';
+    }
+
+    setTimeout(() => {
+      formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
   } catch (error) {
-    console.warn('Could not copy Telegram message:', error);
+    console.warn('Telegram send failed:', error);
+
+    const plainMessage = telegramMessage
+      .replace(/<b>/g, '')
+      .replace(/<\/b>/g, '')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+
+    try {
+      await navigator.clipboard?.writeText(plainMessage);
+    } catch (clipboardError) {
+      console.warn('Could not copy Telegram message:', clipboardError);
+    }
+
+    const successText = document.getElementById('form-success-text');
+    if (formSuccess) formSuccess.hidden = false;
+    if (successText) {
+      successText.textContent = 'Не удалось отправить заявку автоматически. Мы скопировали текст заявки — Telegram откроется в новом окне, отправьте сообщение вручную.';
+    }
+
+    setTimeout(() => {
+      window.open('https://t.me/easy_asylum', '_blank', 'noopener');
+    }, 350);
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = initialButtonText;
+    }
   }
-
-  contactForm.style.display = 'none';
-  formSuccess.hidden = false;
-
-  const successText = document.getElementById('form-success-text');
-  if (successText) {
-    successText.textContent = 'Данные заявки скопированы. Сейчас откроется Telegram @easy_asylum — вставьте сообщение в чат и отправьте.';
-  }
-
-  setTimeout(() => {
-    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 200);
-
-  setTimeout(() => {
-    window.open('https://t.me/easy_asylum', '_blank', 'noopener');
-  }, 450);
 });
 
 // SMOOTH SCROLL
