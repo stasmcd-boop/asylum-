@@ -185,6 +185,7 @@ document.addEventListener('keydown', (e) => {
 // FORM HANDLING
 const contactForm = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
+
 function escapeHtml(value) {
   return String(value || '-')
     .replace(/&/g, '&amp;')
@@ -192,7 +193,20 @@ function escapeHtml(value) {
     .replace(/>/g, '&gt;');
 }
 
+function toPlainText(value) {
+  return String(value)
+    .replace(/<b>/g, '')
+    .replace(/<\/b>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+}
+
 async function sendTelegramLead(message) {
+  if (window.location.protocol === 'file:') {
+    throw new Error('LOCAL_FILE_MODE');
+  }
+
   const response = await fetch('/.netlify/functions/send-telegram', {
     method: 'POST',
     headers: {
@@ -204,7 +218,7 @@ async function sendTelegramLead(message) {
   const result = await response.json().catch(() => null);
 
   if (!response.ok || !result?.ok) {
-    throw new Error(result?.error || 'Telegram request failed');
+    throw new Error(result?.error || 'Telegram function request failed');
   }
 
   return result;
@@ -258,12 +272,7 @@ contactForm?.addEventListener('submit', async (e) => {
   } catch (error) {
     console.warn('Telegram send failed:', error);
 
-    const plainMessage = telegramMessage
-      .replace(/<b>/g, '')
-      .replace(/<\/b>/g, '')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&');
+    const plainMessage = toPlainText(telegramMessage);
 
     try {
       await navigator.clipboard?.writeText(plainMessage);
@@ -274,12 +283,10 @@ contactForm?.addEventListener('submit', async (e) => {
     const successText = document.getElementById('form-success-text');
     if (formSuccess) formSuccess.hidden = false;
     if (successText) {
-      successText.textContent = 'Не удалось отправить заявку автоматически. Мы скопировали текст заявки — Telegram откроется в новом окне, отправьте сообщение вручную.';
+      successText.textContent = error.message === 'LOCAL_FILE_MODE'
+        ? 'Локально через file:// автоматическая отправка недоступна. На опубликованном сайте заявка уйдет через защищенную Netlify Function.'
+        : 'Не удалось отправить заявку автоматически. Проверьте переменные TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID в Netlify. Текст заявки скопирован.';
     }
-
-    setTimeout(() => {
-      window.open('https://t.me/easy_asylum', '_blank', 'noopener');
-    }, 350);
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
@@ -376,3 +383,13 @@ document.getElementById('scroll-to-form')?.addEventListener('click', () => {
     card.style.transform = '';
   });
 })();
+
+
+document.querySelectorAll('[data-back-link]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    if (window.history.length > 1 && document.referrer) {
+      event.preventDefault();
+      window.history.back();
+    }
+  });
+});

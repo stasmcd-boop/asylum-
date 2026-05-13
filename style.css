@@ -86,3 +86,96 @@ body{background:#06111f;color:#d8e7ef}main{background:#06111f}.outcome,.services
 @media(max-width:760px){.seo-card-link{width:100%;margin-top:16px}}
 
 .btn:disabled{cursor:not-allowed;opacity:.68;transform:none!important}.btn:disabled::after{display:none}
+
+.page-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;text-decoration:none;color:#06111f;background:linear-gradient(135deg,var(--lime),var(--cyan));border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:10px 15px;font-weight:900;box-shadow:0 16px 42px rgba(84,245,223,.18);transition:transform .22s ease,box-shadow .22s ease}
+.page-back:hover{transform:translateY(-2px);box-shadow:0 20px 52px rgba(84,245,223,.26)}
+@media(max-width:760px){.page-back{margin-bottom:18px;padding:10px 14px;font-size:14px}}
+
+
+/* Mobile overflow hardening */
+html,body{max-width:100%;overflow-x:hidden}
+.hero-grid,.page-grid,.contact-grid,.article-grid,.seo-feature-grid,.direction-grid{min-width:0}
+.hero-copy,.page-card,.page-aside,.contact-panel,.route-card,.floating-card{min-width:0;max-width:100%}
+.hero h1,.page-hero h1,.section-head h2,.page-card h2,.page-card h3{overflow-wrap:anywhere}
+.lead,.page-hero p,.page-card p,.page-card li{overflow-wrap:anywhere}
+.btn,.page-back,.hero-quick-actions button,.hero-quick-actions a{max-width:100%;white-space:normal;text-align:center}
+.eyebrow{max-width:100%;white-space:normal;flex-wrap:wrap}
+@media(max-width:760px){
+  .container{padding-left:18px;padding-right:18px}
+  .hero{overflow:hidden}
+  .hero h1{font-size:clamp(2.05rem,10.6vw,3.55rem);line-height:1.06}
+  .hero-actions .btn,.btn-block{width:100%}
+  .page-card{width:100%;overflow:hidden}
+  .page-content{overflow:hidden}
+}
+@media(max-width:420px){
+  .container{padding-left:18px;padding-right:18px}
+  .hero h1{font-size:clamp(1.96rem,10vw,3rem)}
+  .page-hero h1{font-size:clamp(1.85rem,9vw,2.85rem)}
+}
+
+
+/* Final mobile width lock */
+@media(max-width:760px){
+  .hero .container,
+  .page-hero .container,
+  .page-content .container,
+  .contact .container{
+    width:100%;
+    max-width:100vw;
+    overflow:hidden;
+  }
+  .hero-copy,
+  .hero-copy .lead,
+  .hero-copy .hero-actions,
+  .hero-copy .hero-proof,
+  .hero-copy .hero-quick-actions,
+  .page-card,
+  .page-card p,
+  .page-card li,
+  .page-hero p{
+    width:100%;
+    max-width:calc(100vw - 36px);
+  }
+  .page-card{
+    padding:20px;
+  }
+  .page-card p,
+  .page-card li,
+  .page-hero p,
+  .lead{
+    white-space:normal;
+    word-break:normal;
+    overflow-wrap:break-word;
+  }
+  .hero h1{
+    max-width:calc(100vw - 36px);
+    font-size:clamp(1.95rem,9.7vw,3.15rem);
+  }
+}
+
+
+/* Mobile visual breathing room */
+@media(max-width:760px){
+  .hero-copy .lead,
+  .page-hero p,
+  .page-card,
+  .page-card p,
+  .page-card li{
+    max-width:calc(100vw - 56px);
+  }
+  .hero h1{
+    max-width:8.8ch;
+    font-size:clamp(1.9rem,9.25vw,2.95rem);
+  }
+  .page-card{
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+
+
+/* Preserve hero headline word integrity */
+.hero h1,.page-hero h1{word-break:normal;overflow-wrap:normal;hyphens:none}
+@media(min-width:761px){.hero h1{max-width:12.8ch}}
+@media(max-width:760px){.hero h1{max-width:9.8ch}}

@@ -1,12 +1,35 @@
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8765560708:AAE3XW-ra8zd5wuMR9XDoN1clqy2SXMkfj0';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '7798853644';
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+const headers = {
+  'Access-Control-Allow-Origin': 'https://asylumusa.netlify.app',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
 
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers,
+      body: ''
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: { Allow: 'POST' },
+      headers: { ...headers, Allow: 'POST' },
       body: JSON.stringify({ ok: false, error: 'Method not allowed' })
+    };
+  }
+
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ ok: false, error: 'Telegram environment variables are not configured' })
     };
   }
 
@@ -17,6 +40,7 @@ exports.handler = async (event) => {
     if (!message) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ ok: false, error: 'Message is required' })
       };
     }
@@ -37,6 +61,7 @@ exports.handler = async (event) => {
     if (!response.ok || !result?.ok) {
       return {
         statusCode: 502,
+        headers,
         body: JSON.stringify({
           ok: false,
           error: result?.description || 'Telegram request failed'
@@ -46,11 +71,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ ok: true })
     };
   } catch (error) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ ok: false, error: error.message || 'Server error' })
     };
   }
