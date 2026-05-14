@@ -404,3 +404,24 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
     }
   });
 });
+
+
+(function initFloatingContact() {
+  if (document.querySelector('.floating-contact')) return;
+
+  const contactSection = document.getElementById('contact');
+  const navContact = document.querySelector('.nav a[href*="contacts/index.html"]');
+  const link = document.createElement('a');
+  link.className = 'floating-contact';
+  link.href = contactSection ? '#contact' : (navContact?.getAttribute('href') || 'contacts/index.html');
+  link.setAttribute('aria-label', 'Связаться через Telegram или email');
+  link.innerHTML = '<span class="floating-contact-icon">↗</span><span class="floating-contact-text"><strong>Связаться</strong><small>Telegram / email</small></span>';
+
+  link.addEventListener('click', (event) => {
+    if (!contactSection) return;
+    event.preventDefault();
+    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.body.appendChild(link);
+})();
