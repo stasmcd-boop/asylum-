@@ -8,20 +8,20 @@
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#06111f" />
   <meta name="format-detection" content="telephone=no" />
-  <link rel="canonical" href="https://asylumusa.netlify.app/" />
+  <link rel="canonical" href="http://easy-asylum.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:title" content="Помощь с выездом из России — маршрут, транзит и документы" />
   <meta property="og:description" content="Разбор ситуации, реалистичный маршрут, транзит, билеты и подготовка документов. Первый разбор — бесплатно." />
-  <meta property="og:url" content="https://asylumusa.netlify.app/" />
+  <meta property="og:url" content="http://easy-asylum.com/" />
   <meta property="og:site_name" content="Безопасный маршрут" />
-  <meta property="og:image" content="https://asylumusa.netlify.app/assets/og-cover.png" />
+  <meta property="og:image" content="http://easy-asylum.com/assets/og-cover.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Помощь с выездом из России — маршрут, транзит и документы" />
   <meta name="twitter:description" content="План выезда, оценка рисков, транзит, билеты и подготовка материалов. Бесплатный первичный разбор." />
-  <meta name="twitter:image" content="https://asylumusa.netlify.app/assets/og-cover.png" />
+  <meta name="twitter:image" content="http://easy-asylum.com/assets/og-cover.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Onest:wght@400;500;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
     "@type": "ProfessionalService",
     "name": "Безопасный маршрут",
     "description": "Консультационная помощь по планированию выезда, транзита, билетов и подготовке материалов для международной защиты.",
-    "url": "https://asylumusa.netlify.app/",
+    "url": "http://easy-asylum.com/",
     "areaServed": "Worldwide",
     "availableLanguage": ["ru"],
     "sameAs": ["https://t.me/easy_asylum"],
@@ -41,6 +41,7 @@
       "@type": "ContactPoint",
       "contactType": "customer support",
       "url": "https://t.me/easy_asylum",
+      "email": "asylumeasy@gmail.com",
       "availableLanguage": ["ru"]
     },
     "hasOfferCatalog": {
@@ -570,9 +571,10 @@
         <div class="contact-copy">
           <p class="eyebrow">Первый шаг</p>
           <h2>Опишите ситуацию — мы скажем, с чего начать</h2>
-          <p>Для быстрого старта достаточно короткого сообщения. Подробности уточним в переписке или на консультации.</p>
+          <p>Для быстрого старта достаточно короткого сообщения. Если Telegram нестабилен или недоступен, напишите на email — ответим там же или согласуем удобный канал связи.</p>
           <div class="contact-links">
             <a href="https://t.me/easy_asylum" class="chip telegram-chip" target="_blank" rel="noopener">Telegram @easy_asylum</a>
+            <a href="mailto:asylumeasy@gmail.com?subject=Заявка%20с%20сайта%20Easy%20Asylum" class="chip email-chip">asylumeasy@gmail.com</a>
           </div>
           <div class="urgent-box">
             <strong>Если срочно:</strong> напишите слово «Срочно» и укажите, сколько дней есть на решение.
@@ -586,9 +588,14 @@
               <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
             </div>
             <div class="form-group">
-              <label for="f-msg">Ваш Telegram *</label>
-              <input id="f-msg" name="messenger" type="text" placeholder="@username" required />
+              <label for="f-msg">Ваш Telegram</label>
+              <input id="f-msg" name="messenger" type="text" placeholder="@username, если удобно" />
             </div>
+            <div class="form-group">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" placeholder="asylumeasy@gmail.com" />
+            </div>
+            <p class="form-hint">Укажите Telegram или email — достаточно одного способа связи.</p>
             <div class="form-row">
               <div class="form-group">
                 <label for="f-loc">Где вы сейчас *</label>

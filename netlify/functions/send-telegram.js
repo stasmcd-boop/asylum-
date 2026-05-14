@@ -1,18 +1,25 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-const headers = {
-  'Access-Control-Allow-Origin': 'https://asylumusa.netlify.app',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json'
-};
+const allowedOrigins = new Set([
+  'http://easy-asylum.com',
+  'https://easy-asylum.com'
+]);
+
+function buildHeaders(origin) {
+  return {
+    'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : 'http://easy-asylum.com',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+}
 
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
-      headers,
+      headers: buildHeaders(event.headers.origin || event.headers.Origin),
       body: ''
     };
   }
@@ -20,7 +27,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: { ...headers, Allow: 'POST' },
+      headers: { ...buildHeaders(event.headers.origin || event.headers.Origin), Allow: 'POST' },
       body: JSON.stringify({ ok: false, error: 'Method not allowed' })
     };
   }
@@ -28,7 +35,7 @@ exports.handler = async (event) => {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     return {
       statusCode: 500,
-      headers,
+      headers: buildHeaders(event.headers.origin || event.headers.Origin),
       body: JSON.stringify({ ok: false, error: 'Telegram environment variables are not configured' })
     };
   }
@@ -40,7 +47,7 @@ exports.handler = async (event) => {
     if (!message) {
       return {
         statusCode: 400,
-        headers,
+        headers: buildHeaders(event.headers.origin || event.headers.Origin),
         body: JSON.stringify({ ok: false, error: 'Message is required' })
       };
     }
@@ -61,7 +68,7 @@ exports.handler = async (event) => {
     if (!response.ok || !result?.ok) {
       return {
         statusCode: 502,
-        headers,
+        headers: buildHeaders(event.headers.origin || event.headers.Origin),
         body: JSON.stringify({
           ok: false,
           error: result?.description || 'Telegram request failed'
@@ -71,13 +78,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers,
+      headers: buildHeaders(event.headers.origin || event.headers.Origin),
       body: JSON.stringify({ ok: true })
     };
   } catch (error) {
     return {
       statusCode: 500,
-      headers,
+      headers: buildHeaders(event.headers.origin || event.headers.Origin),
       body: JSON.stringify({ ok: false, error: error.message || 'Server error' })
     };
   }

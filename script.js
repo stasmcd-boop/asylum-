@@ -237,11 +237,22 @@ contactForm?.addEventListener('submit', async (e) => {
     planning: 'Планирую заранее'
   };
 
+  const messenger = String(data.messenger || '').trim();
+  const email = String(data.email || '').trim();
+
+  if (!messenger && !email) {
+    const contactInput = document.getElementById('f-msg') || document.getElementById('f-email');
+    contactInput?.focus();
+    alert('Укажите Telegram или email, чтобы мы могли с вами связаться.');
+    return;
+  }
+
   const telegramMessage = [
     '<b>Новая заявка с сайта Safe Route</b>',
     '',
     '<b>Имя:</b> ' + escapeHtml(data.name),
-    '<b>Telegram:</b> ' + escapeHtml(data.messenger),
+    '<b>Telegram:</b> ' + escapeHtml(messenger),
+    '<b>Email:</b> ' + escapeHtml(email),
     '<b>Где сейчас:</b> ' + escapeHtml(data.location),
     '<b>Срочность:</b> ' + escapeHtml(urgencyMap[data.urgency] || data.urgency || '-'),
     '',
@@ -263,7 +274,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
     const successText = document.getElementById('form-success-text');
     if (successText) {
-      successText.textContent = 'Заявка отправлена в Telegram. Мы свяжемся с вами после разбора сообщения.';
+      successText.textContent = 'Заявка отправлена. Мы свяжемся с вами по указанному каналу после разбора сообщения.';
     }
 
     setTimeout(() => {

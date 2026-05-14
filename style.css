@@ -179,3 +179,20 @@ html,body{max-width:100%;overflow-x:hidden}
 .hero h1,.page-hero h1{word-break:normal;overflow-wrap:normal;hyphens:none}
 @media(min-width:761px){.hero h1{max-width:12.8ch}}
 @media(max-width:760px){.hero h1{max-width:9.8ch}}
+
+
+/* Email contact channel */
+.email-chip{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.20)}
+.email-chip:hover{background:rgba(216,255,114,.14);border-color:rgba(216,255,114,.28)}
+.form-hint{margin:-6px 0 15px;color:#667085;font-size:13px;line-height:1.45}
+.contact-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0 26px}
+.contact-methods a,.page-cta a,.aside-secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:12px 16px;font-weight:900}
+.contact-methods a:first-child,.page-cta a:first-of-type{background:linear-gradient(135deg,var(--lime),var(--cyan));color:#06111f}
+.contact-methods a:last-child,.page-cta a:last-of-type,.aside-secondary{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff}
+.page-aside .aside-secondary{margin-top:10px}
+@media(max-width:760px){.contact-methods{grid-template-columns:1fr}.contact-links .chip{width:100%;justify-content:center}.form-hint{font-size:12.5px}}
+
+
+/* Contact CTA button correction */
+.page-cta a:first-of-type{background:linear-gradient(135deg,var(--lime),var(--cyan));color:#06111f;border-color:transparent}
+.page-cta a + a{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff}
