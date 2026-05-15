@@ -278,3 +278,18 @@ html,body{max-width:100%;overflow-x:hidden}
   }
 }
 
+
+
+/* SEO generated content polish */
+.page-card .internal-links{margin:26px 0;padding:18px;border-radius:18px;background:rgba(84,245,223,.08);border:1px solid rgba(84,245,223,.14);display:grid;gap:10px}
+.page-card .internal-links strong{color:#fff;font-size:16px}
+.page-card .internal-links a{color:var(--cyan);text-decoration:none;font-weight:850}
+.page-card .internal-links a:hover{color:#fff}
+.page-cta{margin:30px 0;padding:22px;border-radius:22px;background:linear-gradient(160deg,rgba(216,255,114,.12),rgba(84,245,223,.08));border:1px solid rgba(255,255,255,.14)}
+.page-cta h3{color:#fff;margin-bottom:8px}
+.page-cta p{margin-bottom:16px}
+.page-faq{display:grid;gap:10px;margin-top:14px}
+.page-faq details{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}
+.page-faq summary{color:#fff}
+.page-faq p{color:rgba(216,231,239,.72)}
+@media(max-width:760px){.page-cta{padding:18px;border-radius:18px}.page-card .internal-links{padding:16px}}
