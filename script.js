@@ -310,7 +310,7 @@ contactForm?.addEventListener('submit', async (e) => {
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
-    if (href === '#') return;
+    if (!href || href === '#' || !href.startsWith('#')) return;
     
     e.preventDefault();
     const target = document.querySelector(href);
@@ -425,3 +425,100 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
 
   document.body.appendChild(link);
 })();
+
+(function initTelegramIntentButtons() {
+  const TELEGRAM_URL = 'https://t.me/easy_asylum';
+  const intentRules = [
+    {
+      match: /получить\s+план/i,
+      message: 'Получить план',
+      label: 'Открыть Telegram и отправить запрос: Получить план'
+    },
+    {
+      match: /разобра(?:ть|ться)\s+ситуаци[юи]/i,
+      message: 'Помогите разобрать ситуацию',
+      label: 'Открыть Telegram и отправить сообщение: Помогите разобрать ситуацию'
+    }
+  ];
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+    }
+    return fallbackCopy(text);
+  }
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+    } catch (error) {
+      console.warn('Telegram message copy failed:', error);
+    } finally {
+      textarea.remove();
+    }
+
+    return Promise.resolve();
+  }
+
+  function showTelegramToast(message) {
+    let toast = document.querySelector('.telegram-toast');
+
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'telegram-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    clearTimeout(showTelegramToast.timer);
+    showTelegramToast.timer = setTimeout(() => {
+      toast.classList.remove('is-visible');
+    }, 3600);
+  }
+
+  function openTelegramWithMessage(event, message) {
+    event.preventDefault();
+    const opened = window.open(TELEGRAM_URL, '_blank', 'noopener,noreferrer');
+
+    copyText(message).finally(() => {
+      showTelegramToast('Текст для Telegram скопирован. Вставьте его в открывшемся чате и отправьте.');
+      if (!opened) {
+        window.location.href = TELEGRAM_URL;
+      }
+    });
+  }
+
+  document.querySelectorAll('a, button').forEach((element) => {
+    const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
+    const rule = intentRules.find((item) => item.match.test(text));
+    if (!rule) return;
+    if (element.closest('form')) return;
+
+    element.dataset.telegramIntent = rule.message;
+    element.setAttribute('aria-label', rule.label);
+    element.setAttribute('title', rule.label);
+
+    if (element.tagName === 'A') {
+      element.setAttribute('href', TELEGRAM_URL);
+      element.setAttribute('target', '_blank');
+      element.setAttribute('rel', 'noopener noreferrer');
+    }
+
+    element.addEventListener('click', (event) => {
+      openTelegramWithMessage(event, rule.message);
+    });
+  });
+})();
+

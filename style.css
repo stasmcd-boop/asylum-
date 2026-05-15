@@ -233,3 +233,48 @@ html,body{max-width:100%;overflow-x:hidden}
     text-align:left;
   }
 }
+
+/* SEO page mobile heading readability */
+@media(max-width:760px){.page-card h2{font-size:clamp(1.35rem,6.8vw,1.95rem);line-height:1.12;overflow-wrap:normal;word-break:normal}.page-card h3{font-size:1.18rem;line-height:1.18}.page-card{max-width:calc(100vw - 36px)!important}.page-card p,.page-card li{max-width:100%!important}}
+
+/* Mobile page card title wrap fix */
+@media(max-width:760px){.page-card h2{font-size:clamp(1.18rem,5.8vw,1.55rem)!important;line-height:1.16!important;overflow-wrap:anywhere!important;word-break:normal!important}.page-card{padding-left:18px!important;padding-right:18px!important}}
+
+/* Mobile SEO card typography final */
+@media(max-width:760px){.page-card h2{font-family:var(--font)!important;font-weight:900!important;letter-spacing:-.025em!important;font-size:clamp(1.35rem,6.1vw,1.75rem)!important;line-height:1.14!important}.page-card h3{font-family:var(--font)!important;font-weight:900!important}}
+
+/* Telegram intent helper */
+.telegram-toast{
+  position:fixed;
+  left:50%;
+  bottom:96px;
+  z-index:260;
+  max-width:min(440px,calc(100vw - 32px));
+  transform:translate(-50%,18px);
+  opacity:0;
+  pointer-events:none;
+  color:#06111f;
+  background:linear-gradient(135deg,var(--lime),var(--cyan));
+  border:1px solid rgba(255,255,255,.38);
+  border-radius:18px;
+  padding:13px 16px;
+  box-shadow:0 24px 76px rgba(0,0,0,.32);
+  font-size:14px;
+  font-weight:850;
+  line-height:1.42;
+  text-align:center;
+  transition:opacity .22s ease,transform .22s ease;
+}
+.telegram-toast.is-visible{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+@media(max-width:760px){
+  .telegram-toast{
+    bottom:92px;
+    border-radius:16px;
+    font-size:13px;
+    padding:12px 14px;
+  }
+}
+

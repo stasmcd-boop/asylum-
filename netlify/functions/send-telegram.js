@@ -2,13 +2,13 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 const allowedOrigins = new Set([
-  'http://easy-asylum.com',
+  'https://easy-asylum.com',
   'https://easy-asylum.com'
 ]);
 
 function buildHeaders(origin) {
   return {
-    'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : 'http://easy-asylum.com',
+    'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : 'https://easy-asylum.com',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
