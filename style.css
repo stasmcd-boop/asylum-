@@ -293,3 +293,34 @@ html,body{max-width:100%;overflow-x:hidden}
 .page-faq summary{color:#fff}
 .page-faq p{color:rgba(216,231,239,.72)}
 @media(max-width:760px){.page-cta{padding:18px;border-radius:18px}.page-card .internal-links{padding:16px}}
+
+
+/* Advanced SEO blocks */
+.breadcrumbs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px;color:rgba(216,231,239,.62);font-size:13px;font-weight:800}
+.breadcrumbs a{color:rgba(216,231,239,.72);text-decoration:none}
+.breadcrumbs a:hover{color:var(--cyan)}
+.breadcrumbs span:last-child{color:#fff}
+.snippet-box{margin:0 0 26px;padding:22px;border-radius:22px;background:linear-gradient(160deg,rgba(84,245,223,.12),rgba(255,255,255,.055));border:1px solid rgba(84,245,223,.18)}
+.snippet-box h2{margin-top:0!important}
+.snippet-box ol,.snippet-box ul{margin-bottom:0}
+.snippet-table{width:100%;border-collapse:collapse;margin-top:14px;overflow:hidden;border-radius:16px}
+.snippet-table th,.snippet-table td{padding:12px 14px;border:1px solid rgba(255,255,255,.12);text-align:left;vertical-align:top;color:rgba(216,231,239,.76)}
+.snippet-table th{color:#06111f;background:linear-gradient(135deg,var(--lime),var(--cyan));font-weight:900}
+.page-faq-expanded details:nth-of-type(n+9){background:rgba(255,255,255,.045)}
+@media(max-width:760px){.breadcrumbs{font-size:12px}.snippet-box{padding:18px;border-radius:18px}.snippet-table{display:block;overflow-x:auto;white-space:normal}.snippet-table th,.snippet-table td{min-width:148px;font-size:13px}}
+
+
+/* Mobile SEO hero heading final clamp */
+@media(max-width:760px){
+  .page-hero h1{
+    max-width:calc(100vw - 36px)!important;
+    font-size:clamp(2rem,10.5vw,3.05rem)!important;
+    line-height:1.06!important;
+    overflow-wrap:break-word!important;
+    word-break:normal!important;
+    hyphens:none!important;
+  }
+  .page-hero p{
+    max-width:calc(100vw - 36px)!important;
+  }
+}
