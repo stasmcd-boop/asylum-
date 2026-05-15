@@ -389,3 +389,114 @@ html,body{max-width:100%;overflow-x:hidden}
     padding:10px;
   }
 }
+
+
+/* Final 10-block SEO UI */
+.breadcrumb-nav{margin-bottom:18px}
+.breadcrumb{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;color:rgba(216,231,239,.62);font-size:13px;font-weight:850}
+.breadcrumb-item{display:inline-flex;align-items:center}
+.breadcrumb-item+.breadcrumb-item::before{content:"/";padding-right:8px;color:rgba(216,231,239,.36)}
+.breadcrumb-item a{color:rgba(216,231,239,.72);text-decoration:none}
+.breadcrumb-item a:hover{color:var(--cyan)}
+.breadcrumb-item.active{color:#fff}
+.contextual-links{padding:16px 18px;border-radius:18px;background:rgba(84,245,223,.08);border:1px solid rgba(84,245,223,.14);font-weight:750}
+.contextual-links a{color:var(--cyan);text-decoration:none}
+.contextual-links a:hover{color:#fff}
+.related-content,.social-share{margin:26px 0;padding:20px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.related-content h3,.social-share h4{margin:0 0 12px;color:#fff}
+.related-links{list-style:none!important;padding:0!important;margin:0!important;display:grid;gap:10px}
+.related-links a{color:var(--cyan);text-decoration:none;font-weight:850}
+.related-links a:hover{color:#fff}
+.post-cta{background:linear-gradient(135deg,#06111f 0%,#153348 100%);color:white;padding:26px;border-radius:22px;margin:30px 0;text-align:center;border:1px solid rgba(84,245,223,.16);box-shadow:0 22px 70px rgba(0,0,0,.22)}
+.post-cta h4{margin:0 0 8px;color:#fff;font-size:24px}
+.post-cta p{margin:0 0 16px!important;color:rgba(216,231,239,.76)!important}
+.post-cta .btn{margin:6px}
+.social-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;margin:0 8px 8px 0;color:white;text-decoration:none;border-radius:999px;font-weight:900}
+.social-btn.telegram{background:#0088cc}.social-btn.vk{background:#4680c3}.social-btn.facebook{background:#1877f2}.social-btn.linkedin{background:#0a66c2}
+.social-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+@media(max-width:760px){.breadcrumb{font-size:12px}.post-cta{padding:20px;border-radius:18px}.post-cta h4{font-size:20px}.post-cta .btn,.social-btn{width:100%;margin-right:0}.related-content,.social-share{padding:17px;border-radius:18px}}
+
+
+/* Final mobile long text hardening */
+@media(max-width:760px){
+  .page-hero h1,
+  .page-card h2,
+  .snippet-box h2,
+  .post-cta h4{
+    max-width:100%!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    white-space:normal!important;
+    hyphens:auto!important;
+  }
+  .page-hero .container,
+  .page-content .container,
+  .page-card,
+  .snippet-box,
+  .contextual-links,
+  .post-cta,
+  .related-content,
+  .social-share{
+    overflow:hidden!important;
+  }
+  .page-card{
+    max-width:calc(100vw - 36px)!important;
+  }
+}
+
+
+/* Final mobile page hero size override */
+@media(max-width:760px){
+  .page-shell .page-hero h1{
+    display:block!important;
+    width:100%!important;
+    max-width:calc(100vw - 56px)!important;
+    font-size:clamp(1.82rem,8.6vw,2.45rem)!important;
+    line-height:1.12!important;
+    letter-spacing:-.035em!important;
+    text-wrap:wrap!important;
+    overflow-wrap:anywhere!important;
+  }
+}
+
+
+/* Final mobile page title column */
+@media(max-width:760px){
+  .page-shell .page-hero h1{
+    max-width:9.8ch!important;
+    font-size:clamp(1.95rem,9.2vw,2.35rem)!important;
+    line-height:1.12!important;
+  }
+}
+
+
+/* Final mobile card heading column */
+@media(max-width:760px){
+  .page-shell .page-card h2,
+  .page-shell .snippet-box h2{
+    max-width:10ch!important;
+    font-size:clamp(1.45rem,7.2vw,1.85rem)!important;
+    line-height:1.14!important;
+    overflow-wrap:normal!important;
+  }
+  .page-shell .page-card p,
+  .page-shell .contextual-links,
+  .page-shell .snippet-box li,
+  .page-shell .snippet-box td{
+    max-width:100%!important;
+    overflow-wrap:break-word!important;
+  }
+}
+
+
+/* Final mobile paragraph overflow guard */
+@media(max-width:760px){
+  .page-shell .page-card p,
+  .page-shell .page-card li,
+  .page-shell .contextual-links,
+  .page-shell .snippet-box,
+  .page-shell .snippet-box *{
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+  }
+}

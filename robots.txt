@@ -1,21 +1,48 @@
 User-agent: *
 Allow: /
+Allow: /stati/
+Allow: /marshruty/
+Allow: /uslugi/
+Allow: /podgotovka-k-ssha/
+Allow: /podgotovka-k-evrope/
+Allow: /podgotovka-k-kanade/
+Allow: /sitemap.xml
+Allow: /sitemap_index.xml
 Disallow: /admin/
-Disallow: /tmp/
 Disallow: /private/
+Disallow: /api/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /*.json$
+Disallow: /*.xml$
 Disallow: /*?utm_
 Disallow: /*?fbclid=
 Disallow: /*?gclid=
 
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
+
+User-agent: Yandexbot
+Allow: /
+Crawl-delay: 0
 
 User-agent: Yandex
 Allow: /
+Crawl-delay: 0
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&fbclid&gclid /
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 2
+Crawl-delay: 0
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
 
 Sitemap: https://easy-asylum.com/sitemap.xml

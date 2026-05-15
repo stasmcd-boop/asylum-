@@ -25,58 +25,58 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easy-asylum.com/marshruty/cherez-kazakhstan/</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://easy-asylum.com/marshruty/cherez-turtsiyu/</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://easy-asylum.com/marshruty/cherez-serbiyu/</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://easy-asylum.com/stati/kak-uehat-iz-rossii/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/stati/dokumenty-dlya-vyezda/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/stati/kak-podgotovit-istoriyu-dlya-ubezhishcha/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/stati/kak-vybrat-tranzitnuyu-stranu/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/stati/oshibki-pri-podgotovke-k-ubezhishchu/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/stati/chem-konsultant-otlichaetsya-ot-advokata/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://easy-asylum.com/marshruty/cherez-kazakhstan/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://easy-asylum.com/marshruty/cherez-turtsiyu/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://easy-asylum.com/marshruty/cherez-serbiyu/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/podgotovka-k-ssha/</loc>
@@ -97,9 +97,9 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easy-asylum.com/kontakty/</loc>
+    <loc>https://easy-asylum.com/legal-disclaimer/</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
