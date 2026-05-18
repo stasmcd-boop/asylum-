@@ -409,19 +409,14 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
 (function initFloatingContact() {
   if (document.querySelector('.floating-contact')) return;
 
-  const contactSection = document.getElementById('contact');
-  const navContact = document.querySelector('.nav a[href*="contacts/index.html"]');
   const link = document.createElement('a');
   link.className = 'floating-contact';
-  link.href = contactSection ? '#contact' : (navContact?.getAttribute('href') || 'contacts/index.html');
-  link.setAttribute('aria-label', 'Связаться через Telegram или email');
-  link.innerHTML = '<span class="floating-contact-icon">↗</span><span class="floating-contact-text"><strong>Связаться</strong><small>Telegram / email</small></span>';
-
-  link.addEventListener('click', (event) => {
-    if (!contactSection) return;
-    event.preventDefault();
-    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  link.href = 'https://t.me/easy_asylum';
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.dataset.telegramIntent = 'Помогите разобрать ситуацию';
+  link.setAttribute('aria-label', 'Связаться в Telegram');
+  link.innerHTML = '<span class="floating-contact-icon">↗</span><span class="floating-contact-text"><strong>Связаться</strong><small>Telegram</small></span>';
 
   document.body.appendChild(link);
 })();
@@ -438,6 +433,16 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
       match: /разобра(?:ть|ться)\s+ситуаци[юи]/i,
       message: 'Помогите разобрать ситуацию',
       label: 'Открыть Telegram и отправить сообщение: Помогите разобрать ситуацию'
+    },
+    {
+      match: /разобрать\s+(?:мой\s+)?(?:кейс|маршрут)|подготовк[ау]\s+к\s+сша|убежищ[еу]\s+в\s+сша/i,
+      message: 'Здравствуйте. Хочу разобрать подготовку к убежищу в США: история, документы, маршрут и билеты.',
+      label: 'Открыть Telegram для разбора подготовки к убежищу в США'
+    },
+    {
+      match: /написать\s+в\s+telegram|связаться|telegram\s*@easy_asylum/i,
+      message: 'Помогите разобрать ситуацию',
+      label: 'Открыть Telegram'
     }
   ];
 
@@ -502,7 +507,10 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
 
   document.querySelectorAll('a, button').forEach((element) => {
     const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
-    const rule = intentRules.find((item) => item.match.test(text));
+    const explicitMessage = element.dataset.telegramIntent;
+    const rule = explicitMessage
+      ? { message: explicitMessage, label: `Открыть Telegram: ${explicitMessage}` }
+      : intentRules.find((item) => item.match.test(text));
     if (!rule) return;
     if (element.closest('form')) return;
 
@@ -521,4 +529,3 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
     });
   });
 })();
-
