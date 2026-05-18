@@ -1,16 +1,29 @@
+# Canonical host and protocol
 http://easy-asylum.com/* https://easy-asylum.com/:splat 301!
 http://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 https://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
-/pomoshch-s-vyezdom-iz-rossii/ /uslugi/pomoshch-s-vyezdom-iz-rossii/ 301
-/podgotovka-keysa-na-ubezhishche/ /uslugi/podgotovka-kejsa-na-ubezhishche/ 301
-/marshrut-i-tranzit/ /uslugi/marshrut-i-tranzit/ 301
-/articles/kak-uehat-iz-rossii/ /stati/kak-uehat-iz-rossii/ 301
-/articles/dokumenty-dlya-vyezda/ /stati/dokumenty-dlya-vyezda/ 301
-/articles/kak-vybrat-tranzitnuyu-stranu/ /stati/kak-vybrat-tranzitnuyu-stranu/ 301
-/articles/kak-podgotovit-istoriyu-dlya-ubezhishcha/ /stati/kak-podgotovit-istoriyu-dlya-ubezhishcha/ 301
-/articles/oshibki-pri-podgotovke-k-ubezhishchu/ /stati/oshibki-pri-podgotovke-k-ubezhishchu/ 301
-/articles/chem-konsultant-otlichaetsya-ot-advokata/ /stati/chem-konsultant-otlichaetsya-ot-advokata/ 301
-/marshrut-cherez-kazakhstan/ /marshruty/cherez-kazakhstan/ 301
-/marshrut-cherez-turtsiyu/ /marshruty/cherez-turtsiyu/ 301
-/marshrut-cherez-serbiyu/ /marshruty/cherez-serbiyu/ 301
-/contacts/ /kontakty/ 301
+
+# Old service URLs -> canonical service URLs
+/uslugi/pomoshch/ /uslugi/pomoshch-s-vyezdom-iz-rossii/ 301!
+/uslugi/podgotovka/ /uslugi/podgotovka-kejsa-na-ubezhishche/ 301!
+/uslugi/marshrut/ /uslugi/marshrut-i-tranzit/ 301!
+/pomoshch-s-vyezdom-iz-rossii/ /uslugi/pomoshch-s-vyezdom-iz-rossii/ 301!
+/podgotovka-keysa-na-ubezhishche/ /uslugi/podgotovka-kejsa-na-ubezhishche/ 301!
+/marshrut-i-tranzit/ /uslugi/marshrut-i-tranzit/ 301!
+
+# Old article URLs -> canonical article URLs
+/stati/kak-uehat/ /stati/kak-uehat-iz-rossii/ 301!
+/articles/kak-uehat-iz-rossii/ /stati/kak-uehat-iz-rossii/ 301!
+/articles/dokumenty-dlya-vyezda/ /stati/dokumenty-dlya-vyezda/ 301!
+/articles/kak-vybrat-tranzitnuyu-stranu/ /stati/kak-vybrat-tranzitnuyu-stranu/ 301!
+/articles/kak-podgotovit-istoriyu-dlya-ubezhishcha/ /stati/kak-podgotovit-istoriyu-dlya-ubezhishcha/ 301!
+/articles/oshibki-pri-podgotovke-k-ubezhishchu/ /stati/oshibki-pri-podgotovke-k-ubezhishchu/ 301!
+/articles/chem-konsultant-otlichaetsya-ot-advokata/ /stati/chem-konsultant-otlichaetsya-ot-advokata/ 301!
+
+# Old route URLs -> canonical route URLs
+/marshrut-cherez-kazakhstan/ /marshruty/cherez-kazakhstan/ 301!
+/marshrut-cherez-turtsiyu/ /marshruty/cherez-turtsiyu/ 301!
+/marshrut-cherez-serbiyu/ /marshruty/cherez-serbiyu/ 301!
+
+# English contact URL -> canonical Russian contact URL
+/contacts/ /kontakty/ 301!
