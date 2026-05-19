@@ -185,6 +185,7 @@ document.addEventListener('keydown', (e) => {
 // FORM HANDLING
 const contactForm = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
+const promoField = document.getElementById('f-promo');
 
 function escapeHtml(value) {
   return String(value || '-')
@@ -239,6 +240,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
   const messenger = String(data.messenger || '').trim();
   const email = String(data.email || '').trim();
+  const promo = String(data.promo || '').trim();
 
   if (!messenger && !email) {
     const contactInput = document.getElementById('f-msg') || document.getElementById('f-email');
@@ -255,6 +257,7 @@ contactForm?.addEventListener('submit', async (e) => {
     '<b>Email:</b> ' + escapeHtml(email),
     '<b>Где сейчас:</b> ' + escapeHtml(data.location),
     '<b>Срочность:</b> ' + escapeHtml(urgencyMap[data.urgency] || data.urgency || '-'),
+    '<b>Промокод:</b> ' + escapeHtml(promo || 'не указан'),
     '',
     '<b>Что нужно решить:</b>',
     escapeHtml(data.message)
@@ -306,6 +309,124 @@ contactForm?.addEventListener('submit', async (e) => {
   }
 });
 
+// DISCOUNT POPUP
+(function initDiscountPopup() {
+  const PROMO_CODE = 'SKIDKA10';
+  const HIDE_DAYS = 7;
+  const SHOW_DELAY = 6000;
+  const VISITED_KEY = 'easy_asylum_visited';
+  const HIDDEN_UNTIL_KEY = 'easy_asylum_discount_popup_hidden_until';
+  const PROMO_KEY = 'easy_asylum_promo_code';
+
+  const now = Date.now();
+  const params = new URLSearchParams(window.location.search);
+  const promoFromUrl = params.get('promo');
+  const savedPromo = localStorage.getItem(PROMO_KEY);
+  const currentPromo = promoFromUrl || savedPromo;
+
+  function setPromoField(value) {
+    if (!value) return;
+    const fields = document.querySelectorAll('input[name="promo"], input[name="promocode"], input[name="coupon"], #f-promo');
+    fields.forEach((field) => {
+      field.value = value;
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+      field.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  }
+
+  function hidePopupForSevenDays() {
+    const hiddenUntil = Date.now() + HIDE_DAYS * 24 * 60 * 60 * 1000;
+    localStorage.setItem(HIDDEN_UNTIL_KEY, String(hiddenUntil));
+  }
+
+  function closePopup(popup) {
+    popup.classList.remove('is-visible');
+    popup.setAttribute('aria-hidden', 'true');
+    setTimeout(() => popup.remove(), 260);
+  }
+
+  function goToFormWithPromo(popup) {
+    localStorage.setItem(PROMO_KEY, PROMO_CODE);
+    hidePopupForSevenDays();
+    setPromoField(PROMO_CODE);
+    closePopup(popup);
+
+    const form = document.getElementById('contact-form');
+    const heading = document.getElementById('contact-form-heading');
+    if (form) {
+      (heading || form).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        const field = document.getElementById('f-promo') || form.querySelector('input[name="promo"]');
+        field?.focus({ preventScroll: true });
+      }, 650);
+      return;
+    }
+
+    window.location.href = `/?promo=${encodeURIComponent(PROMO_CODE)}#contact`;
+  }
+
+  function createPopup() {
+    if (document.querySelector('.discount-popup')) return;
+
+    const popup = document.createElement('aside');
+    popup.className = 'discount-popup';
+    popup.setAttribute('role', 'dialog');
+    popup.setAttribute('aria-modal', 'false');
+    popup.setAttribute('aria-labelledby', 'discount-popup-title');
+    popup.setAttribute('aria-hidden', 'true');
+    popup.innerHTML = `
+      <button class="discount-popup-x" type="button" aria-label="Закрыть">×</button>
+      <p class="discount-popup-eyebrow">Для повторного визита</p>
+      <h2 id="discount-popup-title">Похоже, тема всё ещё актуальна</h2>
+      <p>Получите скидку 10% на наши услуги. Поможем спокойно понять, куда двигаться дальше.</p>
+      <div class="discount-coupon" aria-label="Промокод SKIDKA10">
+        <span>Ваш купон</span>
+        <strong>${PROMO_CODE}</strong>
+      </div>
+      <small>Введите этот код в поле заявки на разбор</small>
+      <div class="discount-popup-actions">
+        <button class="discount-accept" type="button">Получить скидку</button>
+        <button class="discount-close" type="button">Закрыть</button>
+      </div>
+    `;
+
+    popup.querySelector('.discount-accept')?.addEventListener('click', () => goToFormWithPromo(popup));
+    popup.querySelector('.discount-close')?.addEventListener('click', () => {
+      hidePopupForSevenDays();
+      closePopup(popup);
+    });
+    popup.querySelector('.discount-popup-x')?.addEventListener('click', () => {
+      hidePopupForSevenDays();
+      closePopup(popup);
+    });
+
+    document.body.appendChild(popup);
+    requestAnimationFrame(() => {
+      popup.classList.add('is-visible');
+      popup.setAttribute('aria-hidden', 'false');
+    });
+  }
+
+  if (currentPromo) {
+    localStorage.setItem(PROMO_KEY, currentPromo);
+    setPromoField(currentPromo);
+    const hashTarget = window.location.hash ? document.querySelector(window.location.hash) : null;
+    hashTarget?.classList.add('reveal-visible');
+    hashTarget?.classList.remove('reveal-init');
+  }
+
+  const wasVisited = localStorage.getItem(VISITED_KEY) === 'true';
+  if (!wasVisited) {
+    localStorage.setItem(VISITED_KEY, 'true');
+    return;
+  }
+
+  const hiddenUntil = Number(localStorage.getItem(HIDDEN_UNTIL_KEY) || 0);
+  if (hiddenUntil > now || currentPromo) return;
+
+  window.setTimeout(createPopup, SHOW_DELAY);
+})();
+
 // SMOOTH SCROLL
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
@@ -340,8 +461,15 @@ document.getElementById('scroll-to-form')?.addEventListener('click', () => {
 
   const sections = document.querySelectorAll('section.reveal');
   if (!sections.length) return;
+  const hashTarget = window.location.hash ? document.querySelector(window.location.hash) : null;
 
-  sections.forEach((el) => el.classList.add('reveal-init'));
+  sections.forEach((el) => {
+    if (el === hashTarget) {
+      el.classList.add('reveal-visible');
+      return;
+    }
+    el.classList.add('reveal-init');
+  });
   sections.forEach((section) => {
     const animatedItems = section.querySelectorAll('.outcome-card, .service-card, .scenario-card, .case-card, .price-card, .fit-card');
     animatedItems.forEach((item, index) => {
@@ -361,7 +489,9 @@ document.getElementById('scroll-to-form')?.addEventListener('click', () => {
     { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
   );
 
-  sections.forEach((el) => io.observe(el));
+  sections.forEach((el) => {
+    if (el !== hashTarget) io.observe(el);
+  });
 
   setTimeout(() => {
     sections.forEach((el) => {

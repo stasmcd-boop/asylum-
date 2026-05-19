@@ -537,3 +537,22 @@ html,body{max-width:100%;overflow-x:hidden}
 .usa-proof-grid strong{display:block;color:#fff;margin-bottom:6px}
 .usa-proof-grid span{display:block;color:rgba(216,231,239,.68);font-size:14px;line-height:1.55}
 @media(max-width:760px){.page-hero-actions{display:grid;grid-template-columns:1fr}.page-hero-actions a{width:100%;text-align:center}.usa-proof-grid{grid-template-columns:1fr}}
+
+/* Repeat-visit discount popup */
+.discount-popup{position:fixed;right:22px;bottom:22px;z-index:260;width:min(390px,calc(100vw - 32px));padding:22px;border-radius:26px;background:radial-gradient(circle at 18% 12%,rgba(84,245,223,.20),transparent 30%),linear-gradient(160deg,rgba(6,17,31,.98),rgba(7,27,43,.96));border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 90px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.12);color:#fff;transform:translateY(18px) scale(.98);opacity:0;pointer-events:none;transition:opacity .26s ease,transform .26s ease}
+.discount-popup.is-visible{opacity:1;transform:none;pointer-events:auto}
+.discount-popup-x{position:absolute;right:12px;top:10px;width:34px;height:34px;border:0;border-radius:999px;background:rgba(255,255,255,.10);color:rgba(255,255,255,.76);font-size:22px;line-height:1;cursor:pointer}
+.discount-popup-x:hover{background:rgba(255,255,255,.16);color:#fff}
+.discount-popup-eyebrow{display:inline-flex;margin:0 0 10px;padding:6px 10px;border-radius:999px;background:rgba(84,245,223,.12);border:1px solid rgba(84,245,223,.18);color:var(--cyan);font:800 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.discount-popup h2{font-family:var(--display);font-size:24px;line-height:1.08;letter-spacing:-.03em;margin:0 34px 10px 0;color:#fff}
+.discount-popup p{margin:0 0 16px;color:rgba(216,231,239,.75);font-size:15px;line-height:1.55}
+.discount-coupon{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:14px 16px;margin:16px 0 8px;border-radius:18px;background:linear-gradient(135deg,rgba(216,255,114,.14),rgba(84,245,223,.12));border:1px dashed rgba(216,255,114,.48)}
+.discount-coupon span{color:rgba(216,231,239,.66);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.discount-coupon strong{font:900 19px var(--mono);color:var(--lime);letter-spacing:.08em}
+.discount-popup small{display:block;color:rgba(216,231,239,.58);line-height:1.45}
+.discount-popup-actions{display:flex;gap:10px;margin-top:18px}
+.discount-popup-actions button{min-height:46px;border:0;border-radius:999px;padding:12px 16px;font:900 14px var(--font);cursor:pointer}
+.discount-accept{flex:1;background:linear-gradient(135deg,var(--lime),var(--cyan));color:#06111f}
+.discount-close{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15)!important;color:#fff}
+section.reveal-init:target,.contact.reveal-init{opacity:1!important;transform:none!important}
+@media(max-width:760px){.discount-popup{left:12px;right:12px;bottom:12px;width:auto;padding:18px;border-radius:22px}.discount-popup h2{font-size:21px}.discount-popup p{font-size:14.5px}.discount-popup-actions{display:grid;grid-template-columns:1fr}.discount-popup-actions button{width:100%}.discount-coupon{grid-template-columns:1fr}.discount-coupon strong{font-size:18px}}
