@@ -203,7 +203,7 @@ function toPlainText(value) {
     .replace(/&amp;/g, '&');
 }
 
-async function sendTelegramLead(message) {
+async function sendTelegramLead(message, meta = {}) {
   if (window.location.protocol === 'file:') {
     throw new Error('LOCAL_FILE_MODE');
   }
@@ -213,7 +213,10 @@ async function sendTelegramLead(message) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ message })
+    body: JSON.stringify({
+      message,
+      company: meta.company || ''
+    })
   });
 
   const result = await response.json().catch(() => null);
@@ -232,6 +235,7 @@ contactForm?.addEventListener('submit', async (e) => {
   const initialButtonText = submitButton?.textContent || 'Отправить заявку';
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData);
+  const situations = formData.getAll('situation').map((item) => String(item).trim()).filter(Boolean);
   const urgencyMap = {
     critical: 'Критично, несколько дней',
     month: 'До месяца',
@@ -241,6 +245,7 @@ contactForm?.addEventListener('submit', async (e) => {
   const messenger = String(data.messenger || '').trim();
   const email = String(data.email || '').trim();
   const promo = String(data.promo || '').trim();
+  const honeypot = String(data.company || '').trim();
 
   if (!messenger && !email) {
     const contactInput = document.getElementById('f-msg') || document.getElementById('f-email');
@@ -257,6 +262,7 @@ contactForm?.addEventListener('submit', async (e) => {
     '<b>Email:</b> ' + escapeHtml(email),
     '<b>Где сейчас:</b> ' + escapeHtml(data.location),
     '<b>Срочность:</b> ' + escapeHtml(urgencyMap[data.urgency] || data.urgency || '-'),
+    '<b>Ситуация:</b> ' + escapeHtml(situations.length ? situations.join(', ') : 'не выбрано'),
     '<b>Промокод:</b> ' + escapeHtml(promo || 'не указан'),
     '',
     '<b>Что нужно решить:</b>',
@@ -269,7 +275,7 @@ contactForm?.addEventListener('submit', async (e) => {
   }
 
   try {
-    await sendTelegramLead(telegramMessage);
+    await sendTelegramLead(telegramMessage, { company: honeypot });
 
     contactForm.reset();
     contactForm.style.display = 'none';

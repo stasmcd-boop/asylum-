@@ -1,9 +1,13 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const MAX_MESSAGE_LENGTH = 3500;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const requestLog = new Map();
 
 const allowedOrigins = new Set([
   'https://easy-asylum.com',
-  'https://easy-asylum.com'
+  'https://www.easy-asylum.com'
 ]);
 
 function buildHeaders(origin) {
@@ -15,19 +19,50 @@ function buildHeaders(origin) {
   };
 }
 
+function getClientKey(event) {
+  const forwardedFor = event.headers['x-forwarded-for'] || event.headers['X-Forwarded-For'] || '';
+  return forwardedFor.split(',')[0].trim() || event.headers['client-ip'] || 'unknown';
+}
+
+function isRateLimited(key) {
+  const now = Date.now();
+  const recent = (requestLog.get(key) || []).filter((time) => now - time < RATE_LIMIT_WINDOW_MS);
+  recent.push(now);
+  requestLog.set(key, recent);
+  return recent.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
 exports.handler = async (event) => {
+  const origin = event.headers.origin || event.headers.Origin || '';
+
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
-      headers: buildHeaders(event.headers.origin || event.headers.Origin),
+      headers: buildHeaders(origin),
       body: ''
+    };
+  }
+
+  if (origin && !allowedOrigins.has(origin)) {
+    return {
+      statusCode: 403,
+      headers: buildHeaders(origin),
+      body: JSON.stringify({ ok: false, error: 'Origin is not allowed' })
+    };
+  }
+
+  if (isRateLimited(getClientKey(event))) {
+    return {
+      statusCode: 429,
+      headers: buildHeaders(origin),
+      body: JSON.stringify({ ok: false, error: 'Too many requests' })
     };
   }
 
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: { ...buildHeaders(event.headers.origin || event.headers.Origin), Allow: 'POST' },
+      headers: { ...buildHeaders(origin), Allow: 'POST' },
       body: JSON.stringify({ ok: false, error: 'Method not allowed' })
     };
   }
@@ -35,7 +70,7 @@ exports.handler = async (event) => {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     return {
       statusCode: 500,
-      headers: buildHeaders(event.headers.origin || event.headers.Origin),
+      headers: buildHeaders(origin),
       body: JSON.stringify({ ok: false, error: 'Telegram environment variables are not configured' })
     };
   }
@@ -43,12 +78,29 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const message = String(body.message || '').trim();
+    const honeypot = String(body.company || '').trim();
+
+    if (honeypot) {
+      return {
+        statusCode: 200,
+        headers: buildHeaders(origin),
+        body: JSON.stringify({ ok: true })
+      };
+    }
 
     if (!message) {
       return {
         statusCode: 400,
-        headers: buildHeaders(event.headers.origin || event.headers.Origin),
+        headers: buildHeaders(origin),
         body: JSON.stringify({ ok: false, error: 'Message is required' })
+      };
+    }
+
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return {
+        statusCode: 413,
+        headers: buildHeaders(origin),
+        body: JSON.stringify({ ok: false, error: 'Message is too long' })
       };
     }
 
@@ -68,7 +120,7 @@ exports.handler = async (event) => {
     if (!response.ok || !result?.ok) {
       return {
         statusCode: 502,
-        headers: buildHeaders(event.headers.origin || event.headers.Origin),
+        headers: buildHeaders(origin),
         body: JSON.stringify({
           ok: false,
           error: result?.description || 'Telegram request failed'
@@ -78,13 +130,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: buildHeaders(event.headers.origin || event.headers.Origin),
+      headers: buildHeaders(origin),
       body: JSON.stringify({ ok: true })
     };
   } catch (error) {
     return {
       statusCode: 500,
-      headers: buildHeaders(event.headers.origin || event.headers.Origin),
+      headers: buildHeaders(origin),
       body: JSON.stringify({ ok: false, error: error.message || 'Server error' })
     };
   }
