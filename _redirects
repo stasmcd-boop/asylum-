@@ -3,6 +3,9 @@ http://easy-asylum.com/* https://easy-asylum.com/:splat 301!
 http://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 https://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 
+# Cleanup malformed URL inspections like /sitemap.xml/stati/page/
+/sitemap.xml/* /:splat 301!
+
 # Old service URLs -> canonical service URLs
 /uslugi/pomoshch/ /uslugi/pomoshch-s-vyezdom-iz-rossii/ 301!
 /uslugi/podgotovka/ /uslugi/podgotovka-kejsa-na-ubezhishche/ 301!
