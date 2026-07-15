@@ -975,3 +975,71 @@ section.reveal-init:target,.contact.reveal-init{opacity:1!important;transform:no
     font-size:15px!important;
   }
 }
+
+/* Payment widget */
+.payment-widget-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:22px;
+  align-items:center;
+  margin-top:24px;
+  padding:22px;
+  border:1px solid rgba(84,245,223,.18);
+  border-radius:22px;
+  background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.055));
+  box-shadow:0 28px 86px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(24px);
+}
+
+.payment-widget-copy{
+  min-width:0;
+}
+
+.payment-widget-copy h3{
+  margin:12px 0 8px;
+  color:#fff;
+  font-size:clamp(1.35rem,2.2vw,1.9rem);
+  line-height:1.12;
+  letter-spacing:-.025em;
+}
+
+.payment-widget-copy p{
+  max-width:720px;
+  color:rgba(216,231,239,.72);
+  font-size:15px;
+  line-height:1.62;
+}
+
+.payment-widget-frame{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:250px;
+  padding:10px;
+  border-radius:20px;
+  background:rgba(6,17,31,.42);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.payment-widget-frame iframe{
+  display:block;
+  width:250px;
+  height:56px;
+  max-width:100%;
+  border:0;
+  border-radius:999px;
+}
+
+@media(max-width:760px){
+  .payment-widget-card{
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:18px;
+    border-radius:20px;
+  }
+
+  .payment-widget-frame{
+    min-width:0;
+    width:100%;
+  }
+}
