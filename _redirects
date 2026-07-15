@@ -27,7 +27,3 @@ https://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 
 # English contact URL -> canonical Russian contact URL
 /contacts/ /kontakty/ 301!
-
-# Duplicate content -> canonical URLs
-/politicheskoe-ubezhishche/ /podgotovka-k-ssha/ 301!
-/dokumenty-dlya-vyezda/ /stati/dokumenty-dlya-vyezda/ 301!
