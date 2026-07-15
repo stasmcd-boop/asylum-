@@ -347,6 +347,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
   function closePopup(popup) {
     popup.classList.remove('is-visible');
+    document.body.classList.remove('discount-popup-open');
     popup.setAttribute('aria-hidden', 'true');
     setTimeout(() => popup.remove(), 260);
   }
@@ -408,6 +409,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
     document.body.appendChild(popup);
     requestAnimationFrame(() => {
+      document.body.classList.add('discount-popup-open');
       popup.classList.add('is-visible');
       popup.setAttribute('aria-hidden', 'false');
     });

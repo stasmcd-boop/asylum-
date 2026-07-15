@@ -3,6 +3,10 @@ http://easy-asylum.com/* https://easy-asylum.com/:splat 301!
 http://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 https://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 
+# Do not publish the local backup copy as duplicate content
+/untitled%20folder/* / 301!
+/favicon.ico /assets/favicon.svg 301!
+
 # Cleanup malformed URL inspections like /sitemap.xml/stati/page/
 /sitemap.xml/stati/* /stati/:splat 301!
 /sitemap.xml/uslugi/* /uslugi/:splat 301!
