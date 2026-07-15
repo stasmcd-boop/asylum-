@@ -1011,23 +1011,47 @@ section.reveal-init:target,.contact.reveal-init{opacity:1!important;transform:no
 }
 
 .payment-widget-frame{
-  display:flex;
+  display:grid;
+  gap:10px;
   align-items:center;
   justify-content:center;
-  min-width:250px;
-  padding:10px;
+  min-width:280px;
+  padding:18px;
   border-radius:20px;
   background:rgba(6,17,31,.42);
   border:1px solid rgba(255,255,255,.10);
 }
 
-.payment-widget-frame iframe{
-  display:block;
+.payment-direct-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   width:250px;
-  height:56px;
   max-width:100%;
-  border:0;
+  min-height:56px;
   border-radius:999px;
+  background:linear-gradient(135deg,var(--lime),var(--cyan));
+  color:#06111f;
+  text-decoration:none;
+  font-weight:900;
+  font-size:17px;
+  box-shadow:0 18px 42px rgba(84,245,223,.22);
+  transition:transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+
+.payment-direct-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 24px 62px rgba(84,245,223,.30);
+  filter:saturate(1.05);
+}
+
+.payment-widget-frame small{
+  display:block;
+  max-width:250px;
+  color:rgba(216,231,239,.58);
+  font-size:12px;
+  line-height:1.35;
+  text-align:center;
 }
 
 @media(max-width:760px){
@@ -1041,5 +1065,11 @@ section.reveal-init:target,.contact.reveal-init{opacity:1!important;transform:no
   .payment-widget-frame{
     min-width:0;
     width:100%;
+  }
+
+  .payment-direct-button,
+  .payment-widget-frame small{
+    width:100%;
+    max-width:none;
   }
 }
