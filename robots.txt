@@ -6,5 +6,6 @@ Disallow: /api/
 Disallow: /tmp/
 Disallow: /cache/
 Disallow: /untitled%20folder/
+Disallow: /seo/
 
 Sitemap: https://easy-asylum.com/sitemap.xml
