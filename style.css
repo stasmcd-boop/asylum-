@@ -1249,3 +1249,17 @@ section.reveal-init:target,.contact.reveal-init{opacity:1!important;transform:no
     scroll-behavior:auto!important;
   }
 }
+
+/* Practical guides and moving budget */
+.hero-start-note { max-width: 620px; color: #c2cddb; font-size: .9rem; line-height: 1.65; margin: 18px 0; }
+.article-toc { display: grid; gap: 10px; padding: 20px; margin: 24px 0; border: 1px solid #dbe3ed; border-radius: 16px; }
+.table-scroll { overflow-x: auto; max-width: 100%; margin: 20px 0; }
+.table-scroll table { min-width: 440px; }
+.budget-calculator { padding: clamp(18px, 4vw, 30px); margin: 28px 0; border: 1px solid #ccd9e8; background: #f1f6fa; color: #172b43; border-radius: 18px; scroll-margin-top: 110px; }
+.budget-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 22px 0; }
+.budget-fields label { display: flex; flex-direction: column; gap: 8px; font-size: .95rem; font-weight: 600; }
+.budget-fields input, .budget-fields select { width: 100%; min-width: 0; min-height: 48px; padding: 12px; border: 1px solid #9eafc4; border-radius: 10px; background: white; color: #172b43; font: inherit; }
+.budget-fields :is(input, select):focus-visible { outline: 3px solid #237c92; outline-offset: 2px; }
+#budget-result:not([hidden]) { display: block; margin-top: 20px; padding: 18px; background: white; border-radius: 12px; font-weight: 700; line-height: 1.7; }
+@media (max-width: 600px) { .budget-fields { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

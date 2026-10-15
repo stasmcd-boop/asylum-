@@ -277,6 +277,7 @@ contactForm?.addEventListener('submit', async (e) => {
   try {
     await sendTelegramLead(telegramMessage, { company: honeypot });
 
+    if (!honeypot && window.trackSiteEvent) window.trackSiteEvent('generate_lead', 'contact_form');
     contactForm.reset();
     contactForm.style.display = 'none';
     if (formSuccess) formSuccess.hidden = false;
@@ -290,6 +291,7 @@ contactForm?.addEventListener('submit', async (e) => {
       formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 200);
   } catch (error) {
+    if (window.trackSiteEvent) window.trackSiteEvent('lead_submit_error', 'contact_form');
     console.warn('Telegram send failed:', error);
 
     const plainMessage = toPlainText(telegramMessage);
@@ -305,7 +307,7 @@ contactForm?.addEventListener('submit', async (e) => {
     if (successText) {
       successText.textContent = error.message === 'LOCAL_FILE_MODE'
         ? 'Локально через file:// автоматическая отправка недоступна. На опубликованном сайте заявка уйдет через защищенную Netlify Function.'
-        : 'Не удалось отправить заявку автоматически. Проверьте переменные TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID в Netlify. Текст заявки скопирован.';
+        : 'Не удалось отправить заявку. Напишите нам в Telegram или на asylumeasy@gmail.com; перед отправкой проверьте текст сообщения.';
     }
   } finally {
     if (submitButton) {
@@ -373,6 +375,9 @@ contactForm?.addEventListener('submit', async (e) => {
   }
 
   function createPopup() {
+    // Do not interrupt article reading or an active form with a discount overlay.
+    if (!['/', '/index.html'].includes(window.location.pathname)) return;
+    if (document.activeElement?.closest('form')) return;
     if (document.querySelector('.discount-popup')) return;
 
     const popup = document.createElement('aside');
@@ -651,6 +656,8 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
       : intentRules.find((item) => item.match.test(text));
     if (!rule) return;
     if (element.closest('form')) return;
+    // Preserve email and internal navigation links.
+    if (element.tagName === 'A' && !explicitMessage && !element.href.startsWith(TELEGRAM_URL)) return;
 
     element.dataset.telegramIntent = rule.message;
     element.setAttribute('aria-label', rule.label);
