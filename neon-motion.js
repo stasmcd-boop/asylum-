@@ -35,6 +35,19 @@
     });
   }
 
+  var supportRoute = document.querySelector('.support-route');
+  if (supportRoute && 'IntersectionObserver' in window) {
+    var supportObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        supportRoute.classList.toggle('is-active', entry.isIntersecting && !reduce.matches);
+      });
+    }, { threshold: 0.1 });
+    supportObserver.observe(supportRoute);
+    reduce.addEventListener('change', function (event) {
+      if (event.matches) supportRoute.classList.remove('is-active');
+    });
+  }
+
   var route = document.querySelector('.neon-route');
   if (!route || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   var frame = 0;
