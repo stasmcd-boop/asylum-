@@ -6,7 +6,7 @@
 
   // Only enhance content after it is in the document; failures leave it readable.
   if ('IntersectionObserver' in window) {
-    var items = document.querySelectorAll('.section-heading, .card, .price-card, .audience-feature, .audience-list > div, .guide-section, .guide-links > a, .page-card > h2, .legal-section');
+    var items = document.querySelectorAll('.dv-home-panel, .section-heading, .card, .price-card, .audience-feature, .audience-list > div, .guide-section, .guide-links > a, .page-card > h2, .legal-section');
     var observationReceived = false;
     var observer = new IntersectionObserver(function (entries) {
       observationReceived = true;
