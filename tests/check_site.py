@@ -61,3 +61,29 @@ home = pages[root / 'index.html']
 assert {'contact-form', 'f-body', 'f-msg', 'f-email', 'burger', 'main-nav'} <= home.ids
 assert len([t for t, a in home.tags if t == 'section']) == 6
 print(f'{len(pages)} sitemap pages: metadata, JSON-LD, unique IDs, local files and anchor targets OK')
+
+# Every self-canonical page, including destinations outside the sitemap, shares one theme.
+shared_header = shared_footer = None
+count = 0
+for file in root.rglob('index.html'):
+    if 'untitled folder' in file.parts:
+        continue
+    text = file.read_text()
+    page = Page(text)
+    canonical = next((a.get('href') for t, a in page.tags if t == 'link' and a.get('rel') == 'canonical'), None)
+    expected = 'https://easy-asylum.com/' + (str(file.parent.relative_to(root)) + '/' if file.parent != root else '')
+    if canonical != expected:
+        continue
+    styles = [a.get('href') for t, a in page.tags if t == 'link' and a.get('rel') == 'stylesheet']
+    assert styles.count('/relocation.css') == 1, file
+    assert not any('style.css' in s for s in styles), file
+    assert any(t == 'script' and a.get('src') == '/neon-motion.js' for t, a in page.tags), file
+    import re
+    header = re.search(r'<header\b.*?</header>', text, re.S)[0]
+    footer = re.search(r'<footer\b.*?</footer>', text, re.S)[0]
+    if shared_header is None:
+        shared_header, shared_footer = header, footer
+    assert header == shared_header and footer == shared_footer, file
+    count += 1
+assert count >= len(pages)
+print(f'{count} self-canonical pages use the same stylesheet, navigation, footer and motion module')

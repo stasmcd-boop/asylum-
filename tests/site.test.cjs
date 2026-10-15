@@ -109,3 +109,26 @@ test('simplified request accepts optional details and only counts confirmed deli
   const missing = await run(true, false);
   assert.equal(missing.sent, 0); assert.equal(missing.errorText.hidden, false);
 });
+
+test('reduced motion keeps all content visible and installs no animations', () => {
+  let added = false;
+  const document = {body: {classList: {add() { added = true; }}}, querySelectorAll() {throw new Error('should not hide content');}};
+  vm.runInNewContext(source('neon-motion.js'), {window: {matchMedia: () => ({matches: true})}, document});
+  assert.equal(added, false);
+});
+
+test('scroll reveal is optional and releases content through its fail-safe', () => {
+  const classes = new Set(); let callback, timeout;
+  const item = {classList: {add: (...names) => names.forEach(n => classes.add(n)), remove: n => classes.delete(n)}, getBoundingClientRect: () => ({top: 2000})};
+  class Observer {constructor(fn) {callback=fn;} observe() {} unobserve() {} disconnect() {}}
+  const window = {matchMedia: () => ({matches:false, addEventListener() {}}), innerHeight: 900,
+    IntersectionObserver: Observer, setTimeout: fn => timeout=fn};
+  const document = {body: {classList: {add() {}}}, querySelectorAll: () => [item], querySelector: () => null};
+  vm.runInNewContext(source('neon-motion.js'), {window, document, IntersectionObserver: Observer});
+  assert.equal(classes.has('neon-pending'), true);
+  timeout(); // If the browser never delivers observations, fail open.
+  assert.equal(classes.has('neon-pending'), false);
+  classes.add('neon-pending');
+  callback([{isIntersecting:true, target:item}]);
+  assert.equal(classes.has('neon-pending'), false);
+});
