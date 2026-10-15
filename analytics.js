@@ -16,17 +16,19 @@
   load('https://www.googletagmanager.com/gtag/js?id=G-Y034LBNTZW');
 
   var isBudgetPage = window.location.pathname.replace(/index\.html$/, '').replace(/\/$/, '') === '/stati/skolko-deneg-nuzhno-dlya-pereezda';
+  // Do not replay contact forms or pages about sensitive personal circumstances.
+  var replayDisabled = isBudgetPage || ['/', '/index.html', '/pomoshch-lgbt/', '/pomoshch-lgbt/index.html'].includes(window.location.pathname);
   window.clarity = window.clarity || function () {
     (window.clarity.q = window.clarity.q || []).push(arguments);
   };
-  if (!isBudgetPage) load('https://www.clarity.ms/tag/wqtbbqnnob');
+  if (!replayDisabled) load('https://www.clarity.ms/tag/wqtbbqnnob');
 
   window.ym = window.ym || function () {
     (window.ym.a = window.ym.a || []).push(arguments);
   };
   window.ym.l = Date.now();
   window.ym(109195796, 'init', {
-    clickmap: !isBudgetPage, trackLinks: true, accurateTrackBounce: true, webvisor: !isBudgetPage
+    clickmap: !replayDisabled, trackLinks: true, accurateTrackBounce: true, webvisor: !replayDisabled
   });
   load('https://mc.yandex.ru/metrika/tag.js');
 

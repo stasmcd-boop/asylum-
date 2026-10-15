@@ -58,13 +58,54 @@ test('calculator safely skips pages without its form', () => {
   assert.doesNotThrow(() => vm.runInNewContext(source('budget-calculator.js'), {document: {getElementById: () => null}}));
 });
 
-test('budget page does not load session replay or record entered amounts', () => {
-  const scripts = [];
-  const window = {location: {pathname: '/stati/skolko-deneg-nuzhno-dlya-pereezda/', href: 'https://easy-asylum.com/stati/skolko-deneg-nuzhno-dlya-pereezda/'}};
-  const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
-  vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
-  assert.equal(scripts.length, 2);
-  assert.equal(scripts.some(s => s.src.includes('clarity')), false);
-  assert.equal(window.ym.a[0][2].webvisor, false);
-  assert.equal(window.ym.a[0][2].clickmap, false);
+test('calculator, contact and LGBT pages do not load session replay', () => {
+  for (const path of ['/', '/pomoshch-lgbt/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/']) {
+    const scripts = [];
+    const window = {location: {pathname: path, href: 'https://easy-asylum.com' + path}};
+    const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
+    vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
+    assert.equal(scripts.length, 2, path);
+    assert.equal(scripts.some(s => s.src.includes('clarity')), false, path);
+    assert.equal(window.ym.a[0][2].webvisor, false, path);
+    assert.equal(window.ym.a[0][2].clickmap, false, path);
+  }
+});
+
+test('simplified request accepts optional details and only counts confirmed delivery', async () => {
+  const text = source('script.js');
+  const part = text.slice(text.indexOf("const contactForm ="), text.indexOf('// Promotional overlays'));
+  const run = async (ok, contact) => {
+    let submit, sent = 0, reset = 0;
+    const button = {textContent: 'Отправить заявку', disabled: false};
+    const form = {querySelector: () => button, addEventListener: (_, fn) => submit = fn,
+      reset: () => reset++, style: {}};
+    const status = {hidden: true, scrollIntoView() {}};
+    const statusText = {textContent: ''};
+    const errorText = {hidden: true, textContent: ''};
+    const events = [];
+    const nodes = {'contact-form': form, 'form-success': status, 'form-success-text': statusText,
+      'contact-error': errorText, 'f-msg': {focus() {}}};
+    const document = {getElementById: id => nodes[id] || null};
+    const fields = contact ? [['email', 'demo@example.com'], ['message', 'Planning a move']] : [['message', 'Planning a move']];
+    class FormData {
+      [Symbol.iterator]() {return fields[Symbol.iterator]();}
+      getAll() {return [];}
+    }
+    const context = vm.createContext({document, FormData, console: {warn() {}},
+      window: {location: {protocol: 'https:'}, trackSiteEvent: (...event) => events.push(event)},
+      navigator: {clipboard: {writeText: async () => {}}},
+      fetch: async () => {sent++; return {ok, json: async () => ({ok})};}, setTimeout: () => {}});
+    vm.runInContext(part, context);
+    await submit({preventDefault() {}});
+    return {sent, reset, button, events, statusText, errorText};
+  };
+  const success = await run(true, true);
+  assert.equal(success.sent, 1); assert.equal(success.reset, 1);
+  assert.deepEqual(success.events, [['generate_lead', 'contact_form']]);
+  assert.equal(success.button.disabled, false);
+  const failed = await run(false, true);
+  assert.equal(failed.reset, 0);
+  assert.deepEqual(failed.events, [['lead_submit_error', 'contact_form']]);
+  const missing = await run(true, false);
+  assert.equal(missing.sent, 0); assert.equal(missing.errorText.hidden, false);
 });

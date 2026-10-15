@@ -116,13 +116,13 @@
   </url>
   <url>
     <loc>https://easy-asylum.com/politicheskoe-ubezhishche/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://easy-asylum.com/podgotovka-k-evrope/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -174,4 +174,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://easy-asylum.com/pomoshch-lgbt/</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://easy-asylum.com/strany/</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://easy-asylum.com/uslugi/podbor-strany-i-plana-pereezda/</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://easy-asylum.com/stati/</loc><lastmod>2026-10-15</lastmod></url>
 </urlset>
