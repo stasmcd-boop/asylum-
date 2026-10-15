@@ -58,8 +58,8 @@ test('calculator safely skips pages without its form', () => {
   assert.doesNotThrow(() => vm.runInNewContext(source('budget-calculator.js'), {document: {getElementById: () => null}}));
 });
 
-test('calculator, contact and LGBT pages do not load session replay', () => {
-  for (const path of ['/', '/pomoshch-lgbt/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/']) {
+test('calculator, contact, LGBT and Green Card pages do not load session replay', () => {
+  for (const path of ['/', '/pomoshch-lgbt/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/', '/green-card-2027/', '/green-card-2027/index.html']) {
     const scripts = [];
     const window = {location: {pathname: path, href: 'https://easy-asylum.com' + path}};
     const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};

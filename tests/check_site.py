@@ -59,7 +59,7 @@ for file, page in pages.items():
 assert not errors, errors
 home = pages[root / 'index.html']
 assert {'contact-form', 'f-body', 'f-msg', 'f-email', 'burger', 'main-nav'} <= home.ids
-assert len([t for t, a in home.tags if t == 'section']) == 6
+assert len([t for t, a in home.tags if t == 'section']) == 7
 print(f'{len(pages)} sitemap pages: metadata, JSON-LD, unique IDs, local files and anchor targets OK')
 
 # Every self-canonical page, including destinations outside the sitemap, shares one theme.
