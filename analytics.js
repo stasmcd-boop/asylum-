@@ -1,4 +1,8 @@
 (function () {
+  // Local development and deployment previews must not pollute production reports.
+  var host;
+  try { host = new URL(window.location.href).hostname; } catch (_) { return; }
+  if (!['easy-asylum.com', 'www.easy-asylum.com'].includes(host)) return;
   if (window.safeRouteAnalyticsLoaded) return;
   window.safeRouteAnalyticsLoaded = true;
 
