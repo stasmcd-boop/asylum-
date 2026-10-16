@@ -63,7 +63,7 @@ assert len([t for t, a in home.tags if t == 'section']) == 7
 print(f'{len(pages)} sitemap pages: metadata, JSON-LD, unique IDs, local files and anchor targets OK')
 
 # Every self-canonical page, including destinations outside the sitemap, shares one theme.
-shared_header = shared_footer = None
+shared_headers, shared_footers = {}, {}
 count = 0
 for file in root.rglob('index.html'):
     if 'untitled folder' in file.parts:
@@ -81,9 +81,19 @@ for file in root.rglob('index.html'):
     import re
     header = re.search(r'<header\b.*?</header>', text, re.S)[0]
     footer = re.search(r'<footer\b.*?</footer>', text, re.S)[0]
-    if shared_header is None:
-        shared_header, shared_footer = header, footer
-    assert header == shared_header and footer == shared_footer, file
+    language = next(a.get('lang') for t, a in page.tags if t == 'html')
+    # Only the homepage carries a current-page marker on the language switch.
+    header = header.replace(' hreflang="ru" aria-current="page"', ' hreflang="ru"')
+    shared_headers.setdefault(language, header)
+    shared_footers.setdefault(language, footer)
+    assert header == shared_headers[language] and footer == shared_footers[language], file
     count += 1
 assert count >= len(pages)
 print(f'{count} self-canonical pages use the same stylesheet, navigation, footer and motion module')
+
+# Both homepages advertise reciprocal, crawlable language alternatives.
+for path in ['index.html', 'en/index.html']:
+    page = Page((root / path).read_text())
+    alternates = {a.get('hreflang'): a.get('href') for t, a in page.tags if t == 'link' and a.get('rel') == 'alternate'}
+    assert alternates == {'ru': 'https://easy-asylum.com/', 'en': 'https://easy-asylum.com/en/', 'x-default': 'https://easy-asylum.com/'}, path
+print('Russian and English homepages have reciprocal language alternatives')

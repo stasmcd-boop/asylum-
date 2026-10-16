@@ -59,7 +59,7 @@ test('calculator safely skips pages without its form', () => {
 });
 
 test('calculator, contact, LGBT and Green Card pages do not load session replay', () => {
-  for (const path of ['/', '/pomoshch-lgbt/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/', '/green-card-2027/', '/green-card-2027/index.html']) {
+  for (const path of ['/', '/pomoshch-lgbt/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/', '/green-card-2027/', '/green-card-2027/index.html', '/en/', '/en/index.html']) {
     const scripts = [];
     const window = {location: {pathname: path, href: 'https://easy-asylum.com' + path}};
     const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
@@ -74,10 +74,10 @@ test('calculator, contact, LGBT and Green Card pages do not load session replay'
 test('simplified request accepts optional details and only counts confirmed delivery', async () => {
   const text = source('script.js');
   const part = text.slice(text.indexOf("const contactForm ="), text.indexOf('// Promotional overlays'));
-  const run = async (ok, contact) => {
+  const run = async (ok, contact, language = 'ru') => {
     let submit, sent = 0, reset = 0;
     const button = {textContent: 'Отправить заявку', disabled: false};
-    const form = {querySelector: () => button, addEventListener: (_, fn) => submit = fn,
+    const form = {getAttribute: () => language, querySelector: () => button, addEventListener: (_, fn) => submit = fn,
       reset: () => reset++, style: {}};
     const status = {hidden: true, scrollIntoView() {}};
     const statusText = {textContent: ''};
@@ -108,6 +108,13 @@ test('simplified request accepts optional details and only counts confirmed deli
   assert.deepEqual(failed.events, [['lead_submit_error', 'contact_form']]);
   const missing = await run(true, false);
   assert.equal(missing.sent, 0); assert.equal(missing.errorText.hidden, false);
+  const englishSuccess = await run(true, true, 'en');
+  assert.match(englishSuccess.statusText.textContent, /Your enquiry has been sent/);
+  const englishFailed = await run(false, true, 'en');
+  assert.match(englishFailed.statusText.textContent, /could not send your enquiry/);
+  const englishMissing = await run(true, false, 'en');
+  assert.match(englishMissing.errorText.textContent, /Please provide your Telegram or email/);
+  assert.equal(englishMissing.sent, 0);
 });
 
 test('reduced motion keeps all content visible and installs no animations', () => {
