@@ -192,6 +192,7 @@ document.addEventListener('keydown', (e) => {
 
 // FORM HANDLING
 const contactForm = document.getElementById('contact-form');
+const contactIsEnglish = contactForm?.getAttribute?.('data-language') === 'en';
 const formSuccess = document.getElementById('form-success');
 const promoField = document.getElementById('f-promo');
 
@@ -262,10 +263,10 @@ contactForm?.addEventListener('submit', async (e) => {
     const contactInput = document.getElementById('f-msg') || document.getElementById('f-email');
     contactInput?.focus();
     if (formError) {
-      formError.textContent = 'Укажите Telegram или email, чтобы мы могли ответить.';
+      formError.textContent = (contactIsEnglish ? "Please provide your Telegram or email so we can reply." : 'Укажите Telegram или email, чтобы мы могли ответить.');
       formError.hidden = false;
     } else {
-      alert('Укажите Telegram или email, чтобы мы могли с вами связаться.');
+      alert((contactIsEnglish ? "Please provide your Telegram or email so we can contact you." : 'Укажите Telegram или email, чтобы мы могли с вами связаться.'));
     }
     return;
   }
@@ -287,7 +288,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
   if (submitButton) {
     submitButton.disabled = true;
-    submitButton.textContent = 'Отправляем...';
+    submitButton.textContent = (contactIsEnglish ? "Sending..." : 'Отправляем...');
   }
 
   try {
@@ -300,7 +301,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
     const successText = document.getElementById('form-success-text');
     if (successText) {
-      successText.textContent = 'Заявка отправлена. Мы свяжемся с вами по указанному каналу после разбора сообщения.';
+      successText.textContent = (contactIsEnglish ? "Your enquiry has been sent. We will review your message and reply using your chosen contact method." : 'Заявка отправлена. Мы свяжемся с вами по указанному каналу после разбора сообщения.');
     }
 
     setTimeout(() => {
@@ -322,8 +323,8 @@ contactForm?.addEventListener('submit', async (e) => {
     if (formSuccess) formSuccess.hidden = false;
     if (successText) {
       successText.textContent = error.message === 'LOCAL_FILE_MODE'
-        ? 'Локально через file:// автоматическая отправка недоступна. На опубликованном сайте заявка уйдет через защищенную Netlify Function.'
-        : 'Не удалось отправить заявку. Напишите нам в Telegram или на asylumeasy@gmail.com; перед отправкой проверьте текст сообщения.';
+        ? (contactIsEnglish ? "Automatic sending is unavailable in a local file preview. Please use the published website or contact us on Telegram." : 'Локально через file:// автоматическая отправка недоступна. На опубликованном сайте заявка уйдет через защищенную Netlify Function.')
+        : (contactIsEnglish ? "We could not send your enquiry. Contact us on Telegram or at asylumeasy@gmail.com and check your message before sending." : 'Не удалось отправить заявку. Напишите нам в Telegram или на asylumeasy@gmail.com; перед отправкой проверьте текст сообщения.');
     }
   } finally {
     if (submitButton) {
@@ -445,6 +446,7 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
 
 
 (function initFloatingContact() {
+  if (document.documentElement.lang === 'en') return;
   if (document.querySelector('.floating-contact')) return;
 
   const link = document.createElement('a');
@@ -460,6 +462,7 @@ document.querySelectorAll('[data-back-link]').forEach((link) => {
 })();
 
 (function initTelegramIntentButtons() {
+  if (document.documentElement.lang === 'en') return;
   const TELEGRAM_URL = 'https://t.me/easy_asylum';
   const intentRules = [
     {
