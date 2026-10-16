@@ -35,11 +35,20 @@
   // Only fixed labels are sent: never form values, message text or URL queries.
   window.trackSiteEvent = function (name, placement) {
     try {
-      var params = { page_path: window.location.pathname, placement: placement };
+      var params = { page_path: window.location.pathname, placement: placement, language: document.documentElement?.lang === 'en' ? 'en' : 'ru' };
       window.gtag('event', name, params);
       window.ym(109195796, 'reachGoal', name, params);
     } catch (_) { /* Analytics must never interrupt a contact action. */ }
   };
+
+  // The first interaction is a funnel step, never a confirmed enquiry.
+  var formStarted = false;
+  document.addEventListener('focusin', function (event) {
+    var form = event.target.closest('form');
+    if (!form || form.id !== 'contact-form' || formStarted) return;
+    formStarted = true;
+    window.trackSiteEvent('contact_form_start', 'contact_form');
+  }, true);
 
   document.addEventListener('click', function (event) {
     var link = event.target.closest('a');
@@ -51,7 +60,11 @@
       : link.closest('header') ? 'header'
       : link.closest('footer') ? 'footer'
       : link.closest('aside') ? 'sidebar' : 'content';
-    if (url.hostname === 't.me' && url.pathname.replace(/\/$/, '') === '/easy_asylum') {
+    if (url.origin === window.location.origin && url.pathname === '/primer-plana-pereezda/') {
+      window.trackSiteEvent('plan_example_open', placement);
+    } else if (url.origin === window.location.origin && ['#contact-form-heading', '#dv-request'].includes(url.hash)) {
+      window.trackSiteEvent('contact_cta_click', placement);
+    } else if (url.hostname === 't.me' && url.pathname.replace(/\/$/, '') === '/easy_asylum') {
       window.trackSiteEvent('telegram_click', placement);
     } else if (url.protocol === 'mailto:') {
       window.trackSiteEvent('email_click', placement);

@@ -139,3 +139,24 @@ test('scroll reveal is optional and releases content through its fail-safe', () 
   callback([{isIntersecting:true, target:item}]);
   assert.equal(classes.has('neon-pending'), false);
 });
+
+
+test('enquiry funnel counts starts once, keeps clicks separate and omits entered values', () => {
+  const handlers = {};
+  const window = {location: {pathname: '/en/', origin: 'https://easy-asylum.com', href: 'https://easy-asylum.com/en/?email=private'}};
+  const document = {documentElement: {lang: 'en'}, createElement: () => ({}), head: {appendChild() {}}, addEventListener: (name, fn) => handlers[name] = fn};
+  vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
+  const form = {id: 'contact-form'};
+  handlers.focusin({target: {value: 'private message', closest: () => ({id: 'other'})}});
+  handlers.focusin({target: {value: 'private message', closest: () => form}});
+  handlers.focusin({target: {value: 'private email', closest: () => form}});
+  for (const href of ['https://easy-asylum.com/primer-plana-pereezda/?name=private', 'https://easy-asylum.com/en/#contact-form-heading', 'https://other.example/#contact-form-heading']) {
+    handlers.click({target: {closest: () => ({href, closest: () => null})}});
+  }
+  const events = window.dataLayer.slice(2).map(args => Array.from(args));
+  assert.deepEqual(Array.from(events, e => e[1]), ['contact_form_start', 'plan_example_open', 'contact_cta_click']);
+  assert.equal(events.every(e => e[2].language === 'en'), true);
+  assert.equal(events.some(e => e[1] === 'generate_lead'), false);
+  assert.doesNotMatch(JSON.stringify(events), /private|name=|email=/);
+  assert.deepEqual(Array.from(window.ym.a.slice(1), args => args[2]), ['contact_form_start', 'plan_example_open', 'contact_cta_click']);
+});
