@@ -21,7 +21,7 @@
 
   var isBudgetPage = window.location.pathname.replace(/index\.html$/, '').replace(/\/$/, '') === '/stati/skolko-deneg-nuzhno-dlya-pereezda';
   // Do not replay contact forms or pages about sensitive personal circumstances.
-  var replayDisabled = window.location.pathname.startsWith('/primery-raboty/') || window.location.pathname.startsWith('/pomoshch-lgbt/') || isBudgetPage || ['/', '/index.html', '/en/', '/en/index.html', '/pomoshch-lgbt/', '/pomoshch-lgbt/index.html', '/green-card-2027/', '/green-card-2027/index.html'].includes(window.location.pathname);
+  var replayDisabled = window.location.pathname.startsWith('/otzyvy/') || window.location.pathname.startsWith('/primery-raboty/') || window.location.pathname.startsWith('/pomoshch-lgbt/') || isBudgetPage || ['/', '/index.html', '/en/', '/en/index.html', '/pomoshch-lgbt/', '/pomoshch-lgbt/index.html', '/green-card-2027/', '/green-card-2027/index.html'].includes(window.location.pathname);
   window.clarity = window.clarity || function () {
     (window.clarity.q = window.clarity.q || []).push(arguments);
   };
