@@ -301,7 +301,7 @@ contactForm?.addEventListener('submit', async (e) => {
 
     const successText = document.getElementById('form-success-text');
     if (successText) {
-      successText.textContent = (contactIsEnglish ? "Your enquiry has been sent. We will review your message and reply using your chosen contact method." : 'Заявка отправлена. Мы свяжемся с вами по указанному каналу после разбора сообщения.');
+      successText.textContent = (contactIsEnglish ? "Your enquiry has been sent. We usually reply within a couple of hours using your chosen contact method. We will clarify your situation and arrange a free 30-minute consultation." : 'Заявка отправлена. Обычно отвечаем в течение пары часов по указанному вами каналу. Уточним ситуацию и согласуем бесплатный разбор на 30 минут.');
     }
 
     setTimeout(() => {
