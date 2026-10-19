@@ -1,0 +1,47 @@
+name: Notify IndexNow after production deployment
+on:
+  push:
+    branches: [main]
+    paths: ['**/*.html', '*.html', '*.css', '*.js', 'sitemap.xml', '4de7d20ce4724ff19d0a79ce3b0d2026.txt']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: indexnow-production
+  cancel-in-progress: false
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # Serial runs and the last successful batch keep notifications ten minutes apart.
+      - name: Space notification batches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LAST_SUCCESS=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/indexnow.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].updated_at // ""')
+          export LAST_SUCCESS
+          python3 - <<'PYTHON'
+          from datetime import datetime, timezone
+          import os, time
+          previous = os.environ.get('LAST_SUCCESS')
+          if previous:
+              elapsed = (datetime.now(timezone.utc) - datetime.fromisoformat(previous.replace('Z', '+00:00'))).total_seconds()
+              time.sleep(max(0, 600 - elapsed))
+          PYTHON
+      - name: Check production and notify changed pages
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            python3 .github/scripts/indexnow.py --all
+          else
+            python3 .github/scripts/indexnow.py --before "$BEFORE" --after "$AFTER"
+          fi
