@@ -1,6 +1,7 @@
 """Notify IndexNow after production matches the committed content. No credentials needed."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+from html.parser import HTMLParser
 import json
 import os
 from pathlib import Path
@@ -8,7 +9,7 @@ import re
 import subprocess
 import time
 from urllib.error import HTTPError
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urljoin
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
@@ -43,7 +44,7 @@ def select_urls(before, after, all_urls=False):
         return sitemap_urls()
     changed = git('diff', '--name-only', '--no-renames', before, after).splitlines()
     # Bootstrap ownership once; shared resources can affect every crawlable page.
-    shared = {'relocation.css', 'script.js', 'neon-motion.js', KEY_FILE}
+    shared = {'relocation.css', 'script.js', 'neon-motion.js', KEY_FILE, '.github/scripts/indexnow.py'}
     if shared.intersection(changed):
         return sitemap_urls()
     urls = set()
@@ -77,6 +78,36 @@ def expected_page(url):
     return None
 
 
+
+def html_fingerprint(content, url):
+    # Netlify Pretty URLs rewrites relative index.html links and attribute quotes.
+    # Compare parsed content and normalized URLs, preserving text and script bodies.
+    class Fingerprint(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.tokens = []
+        def handle_starttag(self, tag, attrs):
+            normalized = []
+            for name, value in attrs:
+                if value is not None and name in ('href', 'src', 'action'):
+                    value = urljoin(url, value)
+                    parts = urlsplit(value)
+                    if parts.netloc == HOST and parts.path.endswith('/index.html'):
+                        value = parts._replace(path=parts.path[:-10]).geturl()
+                normalized.append((name, value))
+            self.tokens.append(('start', tag, tuple(sorted(normalized))))
+        def handle_startendtag(self, tag, attrs):
+            self.handle_starttag(tag, attrs)
+        def handle_endtag(self, tag):
+            self.tokens.append(('end', tag))
+        def handle_data(self, data):
+            if data.strip():
+                self.tokens.append(('text', data.strip()))
+    parser = Fingerprint()
+    parser.feed(content.decode('utf-8'))
+    return parser.tokens
+
+
 def production_matches(urls, get=fetch):
     key = (ROOT / KEY_FILE).read_bytes().strip()
     status, body, final = get(ORIGIN + '/' + KEY_FILE)
@@ -87,7 +118,7 @@ def production_matches(urls, get=fetch):
         status, body, final = get(url)
         if expected is None:  # Deleted or moved URL: confirm its removal is live.
             return status in (404, 410) or (status == 200 and final != url)
-        return status == 200 and final == url and body == expected
+        return status == 200 and final == url and html_fingerprint(body, url) == html_fingerprint(expected, url)
     with ThreadPoolExecutor(max_workers=6) as pool:
         return all(pool.map(matches, urls))
 

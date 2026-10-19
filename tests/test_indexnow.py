@@ -37,6 +37,13 @@ class IndexNowTests(unittest.TestCase):
         self.assertFalse(module.production_matches([page], lambda u: (200, key if u.endswith('.txt') else b'old html', u)))
         self.assertFalse(module.production_matches([page], lambda u: (200, key if u.endswith('.txt') else current, module.ORIGIN + '/unexpected/')))
 
+    def test_hosting_link_rewrites_are_equivalent_but_content_changes_are_not(self):
+        url = module.ORIGIN + '/uslugi/example/'
+        source = b'<h1>New content</h1><a href="../../index.html" class="logo">Home</a>'
+        published = b"<h1>New content</h1><a class='logo' href='/'>Home</a>"
+        self.assertEqual(module.html_fingerprint(source, url), module.html_fingerprint(published, url))
+        self.assertNotEqual(module.html_fingerprint(source, url), module.html_fingerprint(published.replace(b'New content', b'Old content'), url))
+
     def test_removed_page_must_really_be_removed(self):
         key = (module.ROOT / module.KEY_FILE).read_bytes()
         removed = module.ORIGIN + '/does-not-exist/'
