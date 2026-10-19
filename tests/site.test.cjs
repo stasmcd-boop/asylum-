@@ -59,7 +59,7 @@ test('calculator safely skips pages without its form', () => {
 });
 
 test('calculator, contact, LGBT and Green Card pages do not load session replay', () => {
-  for (const path of ['/stati/pereezd-v-ispaniyu-dokumenty-i-byudzhet/', '/stati/besplatnaya-konsultatsiya-po-pereezdu/index.html', '/', '/pomoshch-lgbt/', '/pomoshch-lgbt/ssha/', '/pomoshch-lgbt/braziliya/index.html', '/pomoshch-lgbt/ispaniya/', '/primery-raboty/', '/otzyvy/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/', '/green-card-2027/', '/green-card-2027/index.html', '/en/', '/en/index.html']) {
+  for (const path of ['/primer-podgotovki-kejsa/', '/primer-podgotovki-kejsa/index.html', '/uslugi/podgotovka-kejsa-na-ubezhishche/', '/stati/vyezd-pri-riske-mobilizatsii/', '/podgotovka-k-ssha/', '/podgotovka-k-ssha/index.html', '/stati/pereezd-v-ispaniyu-dokumenty-i-byudzhet/', '/stati/besplatnaya-konsultatsiya-po-pereezdu/index.html', '/', '/pomoshch-lgbt/', '/pomoshch-lgbt/ssha/', '/pomoshch-lgbt/braziliya/index.html', '/pomoshch-lgbt/ispaniya/', '/primery-raboty/', '/otzyvy/', '/stati/skolko-deneg-nuzhno-dlya-pereezda/', '/green-card-2027/', '/green-card-2027/index.html', '/en/', '/en/index.html']) {
     const scripts = [];
     const window = {location: {pathname: path, href: 'https://easy-asylum.com' + path}};
     const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
