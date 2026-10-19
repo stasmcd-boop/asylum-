@@ -2,7 +2,7 @@ name: Notify IndexNow after production deployment
 on:
   push:
     branches: [main]
-    paths: ['**/*.html', '*.html', '*.css', '*.js', 'sitemap.xml', '4de7d20ce4724ff19d0a79ce3b0d2026.txt']
+    paths: ['**/*.html', '*.html', '*.css', '*.js', 'sitemap.xml', '4de7d20ce4724ff19d0a79ce3b0d2026.txt', '.github/scripts/indexnow.py', '.github/workflows/indexnow.yml']
   workflow_dispatch:
 permissions:
   contents: read
