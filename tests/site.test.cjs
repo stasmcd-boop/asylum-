@@ -12,7 +12,7 @@ test('analytics queues both counters, initializes once, and labels contacts with
   const context = vm.createContext({window, document, URL, Date});
   vm.runInContext(source('analytics.js'), context);
   vm.runInContext(source('analytics.js'), context);
-  assert.equal(scripts.length, 3);
+  assert.equal(scripts.length, 4);
   assert.equal(window.dataLayer.length, 2);
   assert.equal(window.ym.a[0][1], 'init');
   function click(href, hero) {
@@ -64,7 +64,7 @@ test('calculator, contact, LGBT and Green Card pages do not load session replay'
     const window = {location: {pathname: path, href: 'https://easy-asylum.com' + path}};
     const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
     vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
-    assert.equal(scripts.length, 2, path);
+    assert.equal(scripts.length, 3, path);
     assert.equal(scripts.some(s => s.src.includes('clarity')), false, path);
     assert.equal(window.ym.a[0][2].webvisor, false, path);
     assert.equal(window.ym.a[0][2].clickmap, false, path);
@@ -172,4 +172,61 @@ test('local checks and deployment previews never load production analytics', () 
     assert.equal(handlers.length, 0, href);
     assert.equal(window.trackSiteEvent, undefined, href);
   }
+});
+
+
+test('PostHog strips personal and automatic properties and keeps only an anonymous funnel', () => {
+  const scripts = [];
+  const window = {location: {pathname: '/en/', href: 'https://easy-asylum.com/en/?email=secret#private'}};
+  const document = {documentElement: {lang: 'en'}, referrer: 'https://google.com/search?q=private',
+    createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
+  vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
+  const config = window.posthog._i[0][1];
+  assert.equal(config.api_host, 'https://eu.i.posthog.com');
+  assert.equal(config.person_profiles, 'never');
+  for (const key of ['autocapture', 'capture_pageview', 'capture_exceptions', 'capture_performance', 'capture_heatmaps']) assert.equal(config[key], false);
+  assert.equal(config.disable_session_recording, true);
+  const event = config.before_send({event: 'generate_lead', properties: {token: 'public-token', distinct_id: 'anonymous-id',
+    '$session_id': 'session-id', '$current_url': window.location.href, '$set': {email: 'secret'},
+    email: 'secret', message: 'private history', '$initial_referrer': document.referrer,
+    site_section: 'home', language: 'en', internal_traffic: false}});
+  assert.equal(event.properties.token, window.posthog._i[0][0]);
+  assert.equal(event.properties.distinct_id, 'anonymous-id');
+  assert.equal(event.properties.$session_id, 'session-id');
+  assert.equal(event.properties.$current_url, 'https://easy-asylum.com/en/');
+  assert.equal(event.properties.$referrer, 'https://google.com/');
+  assert.equal(event.properties.$process_person_profile, false);
+  assert.doesNotMatch(JSON.stringify(event), /secret|private|email|message|\$set|search\?/);
+  assert.equal(config.before_send({event: '$autocapture', properties: {text: 'private'}}), null);
+  const queued = Array.from(window.posthog, entry => entry[1]);
+  assert.deepEqual(queued, ['$pageview']);
+  window.trackSiteEvent('unapproved_event', 'private text');
+  assert.equal(window.posthog.length, 1);
+});
+
+test('owner opt-out and privacy signals prevent every analytics request', () => {
+  for (const mode of ['off', 'stored', 'dnt', 'gpc']) {
+    const scripts = [], values = new Map(mode === 'stored' ? [['easy_asylum_analytics', 'off']] : []);
+    const window = {location: {pathname: '/', href: 'https://easy-asylum.com/' + (mode === 'off' ? '?analytics=off' : '')},
+      localStorage: {getItem: key => values.get(key), setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key)}};
+    const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener() {}};
+    vm.runInNewContext(source('analytics.js'), {window, document, URL, Date, navigator: {doNotTrack: mode === 'dnt' ? '1' : '0', globalPrivacyControl: mode === 'gpc'}});
+    assert.equal(scripts.length, 0, mode);
+    assert.equal(window.trackSiteEvent, undefined, mode);
+  }
+});
+
+test('tagged QA only sends PostHog test events; PDF actions remain distinct from leads', () => {
+  const scripts = [], handlers = {};
+  const window = {location: {pathname: '/primer-podgotovki-kejsa/', origin: 'https://easy-asylum.com', href: 'https://easy-asylum.com/primer-podgotovki-kejsa/?analytics=qa'}};
+  const document = {createElement: () => ({}), head: {appendChild: s => scripts.push(s)}, addEventListener: (type, fn) => handlers[type] = fn};
+  vm.runInNewContext(source('analytics.js'), {window, document, URL, Date});
+  assert.equal(scripts.length, 1);
+  assert.match(scripts[0].src, /eu-assets.i.posthog.com/);
+  const href = 'https://easy-asylum.com/assets/case-preparation-workbook-20261019-v2.pdf';
+  for (const download of [true, false]) handlers.click({target: {closest: () => ({href, hasAttribute: () => download, closest: () => null})}});
+  const events = Array.from(window.posthog, entry => entry[1]);
+  assert.deepEqual(events, ['$pageview', 'workbook_download', 'workbook_preview']);
+  assert.equal(window.posthog.every(entry => entry[2].internal_traffic), true);
+  assert.equal(events.includes('generate_lead'), false);
 });

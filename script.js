@@ -260,6 +260,7 @@ contactForm?.addEventListener('submit', async (e) => {
   if (formError) { formError.hidden = true; formError.textContent = ''; }
 
   if (!messenger && !email) {
+    window.trackSiteEvent?.('lead_validation_error', 'contact_form');
     const contactInput = document.getElementById('f-msg') || document.getElementById('f-email');
     contactInput?.focus();
     if (formError) {
