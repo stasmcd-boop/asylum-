@@ -84,6 +84,10 @@ for file in root.rglob('index.html'):
     language = next(a.get('lang') for t, a in page.tags if t == 'html')
     # Only the homepage carries a current-page marker on the language switch.
     header = header.replace(' hreflang="ru" aria-current="page"', ' hreflang="ru"')
+    # This service keeps the shared navigation but sends enquiries to its own form.
+    if file.relative_to(root).as_posix() == 'green-card-2027/index.html':
+        assert header.count('href="#dv-request"') == 2
+        header = header.replace('href="#dv-request"', 'href="/#contact-form-heading"')
     shared_headers.setdefault(language, header)
     shared_footers.setdefault(language, footer)
     assert header == shared_headers[language] and footer == shared_footers[language], file
