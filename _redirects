@@ -42,3 +42,11 @@ https://www.easy-asylum.com/* https://easy-asylum.com/:splat 301!
 
 # English contact URL -> canonical Russian contact URL
 /contacts/ /kontakty/ 301!
+
+# Consolidated guides: one destination for each reader task
+/stati/srochno-uehat-za-24-chasa /stati/kak-uehat-iz-rossii/#urgent 301!
+/stati/srochno-uehat-za-24-chasa/ /stati/kak-uehat-iz-rossii/#urgent 301!
+/stati/srochno-uehat-za-24-chasa/index.html /stati/kak-uehat-iz-rossii/#urgent 301!
+/stati/vyezd-s-detmi /stati/pereezd-iz-rossii-s-detmi/ 301!
+/stati/vyezd-s-detmi/ /stati/pereezd-iz-rossii-s-detmi/ 301!
+/stati/vyezd-s-detmi/index.html /stati/pereezd-iz-rossii-s-detmi/ 301!
